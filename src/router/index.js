@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Galaxy from "../views/Galaxy.vue";
 import Planet from "../views/Planet.vue";
+import MyGalaxy from "../views/MyGalaxy.vue";
+import BucketList from "../views/BucketList.vue";
 
 const routes = [
   {
@@ -18,6 +20,16 @@ const routes = [
     path: "/planet/:id",
     name: "Planet",
     component: Planet,
+  },
+  {
+    path: "/my-galaxy",
+    name: "My Galaxy",
+    component: MyGalaxy,
+  },
+  {
+    path: "/bucket-list",
+    name: "Jedi Bucket List",
+    component: BucketList,
   },
   {
     path: "/about",

@@ -7,7 +7,11 @@
 
   <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <router-link to="/" class="navbar-brand">JG2G</router-link>
+      <router-link to="/" class="navbar-brand justify-content-center align-items-center fs-3">
+        <v-icon name="fa-jedi-order" scale="3" animation="pulse" />
+        JG2G
+      </router-link>
+
       <button
         type="button"
         class="navbar-toggler"
@@ -21,6 +25,8 @@
           <!-- <a href="#" class="nav-item nav-link active">Home</a> -->
           <router-link to="/" class="nav-item nav-link active">Home</router-link>
           <router-link to="/galaxy" class="nav-item nav-link">Galaxy</router-link>
+          <router-link to="/my-galaxy" class="nav-item nav-link">My Galaxy</router-link>
+          <router-link to="/bucket-list" class="nav-item nav-link">Bucket List</router-link>
           <router-link to="/about" class="nav-item nav-link">About</router-link>
         </div>
         <form class="d-flex">
@@ -35,6 +41,16 @@
 
   <router-view />
 </template>
+
+<script>
+import { OhVueIcon } from "oh-vue-icons";
+
+export default {
+  components: {
+    "v-icon": OhVueIcon,
+  },
+};
+</script>
 
 <style>
 #app {
