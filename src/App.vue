@@ -1,9 +1,39 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <!-- <div id="nav">
+    <router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
+    <router-link to="/galaxy">The Galaxy</router-link> |
+    <router-link to="/planet">Planet Details</router-link>
+  </div> -->
+
+  <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <router-link to="/" class="navbar-brand">JG2G</router-link>
+      <button
+        type="button"
+        class="navbar-toggler"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav">
+          <!-- <a href="#" class="nav-item nav-link active">Home</a> -->
+          <router-link to="/" class="nav-item nav-link active">Home</router-link>
+          <router-link to="/galaxy" class="nav-item nav-link">Galaxy</router-link>
+          <router-link to="/about" class="nav-item nav-link">About</router-link>
+        </div>
+        <form class="d-flex">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search the Galaxy!" />
+            <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <router-view />
 </template>
 
 <style>
