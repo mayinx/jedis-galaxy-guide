@@ -4,8 +4,13 @@ import App from "./App.vue";
 
 // Adds oh vue icons npm package
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaJediOrder } from "oh-vue-icons/icons";
-addIcons(FaJediOrder);
+import {
+  FaJediOrder,
+  GiGalaxy,
+  GiEmptyWoodBucketHandle,
+  GiInterstellarPath,
+} from "oh-vue-icons/icons";
+addIcons(FaJediOrder, GiGalaxy, GiEmptyWoodBucketHandle, GiInterstellarPath);
 
 const app = createApp(App).use(router).mount("#app");
 
