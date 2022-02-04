@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Galaxy from "../views/Galaxy.vue";
-import Planet from "../views/Planet.vue";
+import PlanetDetail from "../views/PlanetDetail.vue";
 import JedisPath from "../views/JedisPath.vue";
 import BucketList from "../views/BucketList.vue";
 
@@ -18,8 +18,8 @@ const routes = [
   },
   {
     path: "/planet/:id",
-    name: "Planet",
-    component: Planet,
+    name: "Planet Details",
+    component: PlanetDetail,
   },
   {
     path: "/jedis-path",

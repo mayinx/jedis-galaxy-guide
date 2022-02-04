@@ -30,20 +30,20 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between gap-lg-2" id="navbarCollapse">
-          <div class="navbar-nav gap-lg-2 gap-xl-3 fs-5">
+          <div class="fs-5 gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
             <!-- <a href="#" class="nav-item nav-link active">Home</a> -->
             <!-- <router-link to="/" class="nav-item nav-link active">Home</router-link> -->
             <router-link to="/galaxy" class="nav-item nav-link d-flex">
               <v-icon name="gi-galaxy" class="align-middle" scale="1.5" />
-              <span class="ms-1 align-middle">The Galaxy</span>
+              <span class="ms-3 ms-lg-1 align-middle">The Galaxy</span>
             </router-link>
             <router-link to="/jedis-path" class="nav-item nav-link d-flex">
               <v-icon name="gi-interstellar-path" size="1" class="align-middle" scale="1.5" />
-              <span class="ms-1 align-middle">Jedi's Path</span>
+              <span class="ms-3 ms-lg-1 align-middle">Jedi's Path</span>
             </router-link>
             <router-link to="/bucket-list" class="nav-item nav-link d-flex">
               <v-icon name="gi-empty-wood-bucket-handle" class="align-middle" scale="1.5" />
-              <span class="ms-1 align-middle">Jedi's Bucket List</span>
+              <span class="ms-3 ms-lg-1 align-middle">Jedi's Bucket List</span>
             </router-link>
             <!-- <router-link to="/about" class="nav-item nav-link">
             <v-icon name="gi-galaxy" /> About
@@ -51,7 +51,12 @@
           </div>
           <form class="d-flex">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search the Galaxy!" />
+              <input
+                id="galaxy-search"
+                type="text"
+                class="form-control"
+                placeholder="Search the Galaxy!"
+              />
               <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
             </div>
           </form>
@@ -59,8 +64,6 @@
       </div>
     </nav>
   </header>
-
-  <router-view />
 </template>
 
 <script>
@@ -79,21 +82,26 @@ export default {
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
 }
 
 /* #nav a.router-link-exact-active {
   color: #42b983;
 } */
 
+input#galaxy-search {
+  height: 3rem;
+}
+
 #nav .navbar-nav {
   align-items: stretch;
+  margin-bottom: 0.5rem;
 }
 #nav .navbar-nav a {
+  font-weight: bold;
+  color: #2c3e50;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1.5rem;
   /* padding: 0.75rem 1.25rem; */
 
   /* color: rgba(255, 255, 255, 0.55); */
@@ -112,6 +120,13 @@ export default {
   border: 1px solid #52667c;
 }
 @media (min-width: 992px) {
+  input#galaxy-search {
+    height: auto;
+  }
+
+  #nav .navbar-nav {
+    margin: 0;
+  }
   #nav .navbar-nav a {
     justify-content: center;
     padding: 0.5rem 1rem;

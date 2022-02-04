@@ -9,8 +9,9 @@ import {
   GiGalaxy,
   GiEmptyWoodBucketHandle,
   GiInterstellarPath,
+  GiPlanetCore,
 } from "oh-vue-icons/icons";
-addIcons(FaJediOrder, GiGalaxy, GiEmptyWoodBucketHandle, GiInterstellarPath);
+addIcons(FaJediOrder, GiGalaxy, GiEmptyWoodBucketHandle, GiInterstellarPath, GiPlanetCore);
 
 const app = createApp(App).use(router).mount("#app");
 

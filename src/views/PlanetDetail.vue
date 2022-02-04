@@ -1,5 +1,5 @@
 <template>
-  <main class="planet-details">
+  <main class="planet-detail">
     <section id="page-top-section">
       <div class="container">
         <div class="row">
