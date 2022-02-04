@@ -51,13 +51,15 @@
           </div>
           <form class="d-flex">
             <div class="input-group">
-              <input
-                id="galaxy-search"
-                type="text"
-                class="form-control"
-                placeholder="Search the Galaxy!"
-              />
-              <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
+              <form @submit.prevent="SearchGalaxy()" class="search-form">
+                <input
+                  id="galaxy-search"
+                  type="text"
+                  class="form-control"
+                  placeholder="Search the Galaxy!"
+                />
+                <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
+              </form>
             </div>
           </form>
         </div>
@@ -67,9 +69,22 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { OhVueIcon } from "oh-vue-icons";
 export default {
   name: "Navbar",
+  setup() {
+    const search = ref("");
+    const planets = ref([]);
+
+    const SearchGalaxy = () => {
+      if (search.value != "") {
+        console.log("heho - search: ", search.value);
+      }
+    };
+
+    return { search, planets, SearchGalaxy };
+  },
   components: {
     "v-icon": OhVueIcon,
   },

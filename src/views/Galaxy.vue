@@ -19,15 +19,17 @@
     <section id="page-top-section">
       <div class="container">
         <div class="row">
-          <div class="col text-center">
+          <div class="planet-list col text-center">
+            <!-- planet list -->
             <div class="row row-cols-1 row-cols-md-2 g-4">
               <div class="col">
                 <div class="card mb-3">
-                  <img
+                  <img src="../assets/shutterstock_127633466.jpg" class="card-img-top" alt="..." />
+                  <!-- <img
                     src="https://images.unsplash.com/photo-1632395627727-3b97d0724814?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
                     class="card-img-top"
                     alt="..."
-                  />
+                  /> -->
                   <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">
