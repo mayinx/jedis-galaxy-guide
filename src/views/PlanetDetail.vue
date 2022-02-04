@@ -3,7 +3,7 @@
     <section id="page-top-section">
       <div class="container">
         <div class="row">
-          <div class="col-5 p-3 text-center greeting-cnt">
+          <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
             <h2>Welcome to {{ planet.name }}!</h2>
             <p className=" fs-5">
               Enjoy your stay, young Padawan - but remember:
@@ -116,7 +116,6 @@ export default {
 
 #page-top-section .greeting-cnt {
   background-color: #18181973;
-  width: 50%;
 }
 #page-top-section .greeting-cnt h2 {
   color: white;

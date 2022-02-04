@@ -1,9 +1,4 @@
 <template>
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
-    <router-link to="/galaxy">The Galaxy</router-link> |
-    <router-link to="/planet">Planet Details</router-link>
-  </div> -->
   <header>
     <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid gap-lg-2 gap-xl-5">
@@ -59,9 +54,12 @@
                 type="text"
                 class="form-control"
                 placeholder="Search the Galaxy!"
+                disabled
               />
               <!-- <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button> -->
-              <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
+              <button type="button" disabled class="btn btn-secondary">
+                <i class="bi-search"></i>
+              </button>
             </div>
           </form>
         </div>

@@ -3,10 +3,10 @@
     <section id="page-top-section">
       <div class="container">
         <div class="row">
-          <div class="col-5 p-3 text-center greeting-cnt">
+          <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
             <h2>Behold! The Galaxy!</h2>
             <p className=" fs-5">
-              A wonderous playground for a young Padawan - but at the ame time a dark and dangerous
+              A wonderous playground for a young Padawan - but at the same time a dark and dangerous
               vastness not every Jedi dares to explore...
               <br />
               <strong>So choose wisely among your options below! </strong>
@@ -174,7 +174,6 @@ export default {
 
 #page-top-section .greeting-cnt {
   background-color: #18181973;
-  width: 50%;
 }
 #page-top-section .greeting-cnt h2 {
   color: white;

@@ -36,7 +36,7 @@ export default {
 }
 
 main {
-  padding: 1rem;
+  padding: 0;
 }
 section {
   padding: 50px 0;
