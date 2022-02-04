@@ -149,21 +149,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .planets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 150px);
-
-  justify-content: space-around;
-  padding: 0.25rem;
-}
-.planets-grid-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
-
-/* .card-img {
-} */
-</style>
+<style scoped></style>
