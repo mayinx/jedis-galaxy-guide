@@ -17,7 +17,7 @@ const routes = [
     component: Galaxy,
   },
   {
-    path: "/planet/:id",
+    path: "/planet/:name",
     name: "Planet Details",
     component: PlanetDetail,
   },

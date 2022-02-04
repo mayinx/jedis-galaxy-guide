@@ -17,3 +17,22 @@
     </section>
   </main>
 </template>
+
+<script>
+import { ref, onBeforeMount } from "vue";
+import { useRoute } from "vue-router";
+import env from "@/env.js";
+
+export default {
+  setup() {
+    const planet = ref({});
+    const route = useRoute();
+
+    onBeforeMount(() => {});
+
+    return {
+      planet,
+    };
+  },
+};
+</script>

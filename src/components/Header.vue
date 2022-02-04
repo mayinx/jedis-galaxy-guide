@@ -31,8 +31,6 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between gap-lg-2" id="navbarCollapse">
           <div class="fs-5 gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
-            <!-- <a href="#" class="nav-item nav-link active">Home</a> -->
-            <!-- <router-link to="/" class="nav-item nav-link active">Home</router-link> -->
             <router-link to="/galaxy" class="nav-item nav-link d-flex">
               <v-icon name="gi-galaxy" class="align-middle" scale="1.5" />
               <span class="ms-3 ms-lg-1 align-middle">The Galaxy</span>
@@ -45,21 +43,25 @@
               <v-icon name="gi-empty-wood-bucket-handle" class="align-middle" scale="1.5" />
               <span class="ms-3 ms-lg-1 align-middle">Jedi's Bucket List</span>
             </router-link>
-            <!-- <router-link to="/about" class="nav-item nav-link">
-            <v-icon name="gi-galaxy" /> About
-          </router-link> -->
           </div>
           <form class="d-flex">
             <div class="input-group">
-              <form @submit.prevent="SearchGalaxy()" class="search-form">
-                <input
-                  id="galaxy-search"
-                  type="text"
-                  class="form-control"
-                  placeholder="Search the Galaxy!"
-                />
-                <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
-              </form>
+              <!-- <input
+                id="galaxy-search"
+                type="text"
+                class="form-control"
+                placeholder="Search the Galaxy!"
+                v-model="search"
+                @input="searchGalaxy()"
+              /> -->
+              <input
+                id="galaxy-search"
+                type="text"
+                class="form-control"
+                placeholder="Search the Galaxy!"
+              />
+              <!-- <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button> -->
+              <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
             </div>
           </form>
         </div>
@@ -71,19 +73,49 @@
 <script>
 import { ref } from "vue";
 import { OhVueIcon } from "oh-vue-icons";
+import { inject } from "vue";
+import env from "@/env.js";
+
+// TODO / FYI: This part is not finished yet adn scheduled for one of the next iterations - it's supposed
+// to work as a global search that shall substitute the current galaxy-on-page-search - i.e. on entering of
+// a search term a switch to the galaxy-view/component shall be performed to update its contents no matter
+// what's the current view etc. ...
 export default {
-  name: "Navbar",
+  name: "Header",
   setup() {
+    const axios = inject("axios"); // inject axios
     const search = ref("");
     const planets = ref([]);
 
-    const SearchGalaxy = () => {
-      if (search.value != "") {
-        console.log("heho - search: ", search.value);
+    const isLoading = ref(false);
+    const error = ref(null);
+
+    const searchGalaxy = async () => {
+      isLoading.value = true;
+      try {
+        if (search.value != "") {
+          console.log("heho - search: ", search.value);
+
+          let jsonResult = await axios.get(`${env.apiPlanetsUrl}?search=${search.value}`);
+          planets.value = jsonResult?.data?.results;
+          isLoading.value = false;
+          search.value = "";
+          console.log(jsonResult);
+          console.log(planets.value);
+        }
+      } catch (e) {
+        error.value = e;
+        console.log("error fetching data: ", e);
       }
     };
 
-    return { search, planets, SearchGalaxy };
+    return {
+      search,
+      planets,
+      searchGalaxy,
+      isLoading,
+      error,
+    };
   },
   components: {
     "v-icon": OhVueIcon,
@@ -95,18 +127,11 @@ export default {
 #nav {
   padding: 0.5rem;
 }
-
 #nav a {
 }
-
-/* #nav a.router-link-exact-active {
-  color: #42b983;
-} */
-
 input#galaxy-search {
   height: 3rem;
 }
-
 #nav .navbar-nav {
   align-items: stretch;
   margin-bottom: 0.5rem;
@@ -117,14 +142,9 @@ input#galaxy-search {
   justify-content: flex-start;
   align-items: center;
   padding: 1rem 1.5rem;
-  /* padding: 0.75rem 1.25rem; */
-
-  /* color: rgba(255, 255, 255, 0.55); */
   border-radius: 0.5rem;
   border: 1px solid transparent;
-
   transition: all 0.35s;
-
   background-color: #edf0f2;
 }
 
@@ -138,7 +158,6 @@ input#galaxy-search {
   input#galaxy-search {
     height: auto;
   }
-
   #nav .navbar-nav {
     margin: 0;
   }

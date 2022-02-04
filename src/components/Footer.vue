@@ -6,7 +6,9 @@
       <div
         class="col-12 col-md-5 d-flex justify-content-center justify-content-md-start align-items-center"
       >
-        <span class="text-muted">© 2022 Christian Daum</span>
+        <span class="text-muted">© 2022 Christian Daum</span>&nbsp;|&nbsp;
+        <!-- <span class="text-muted">© 2022 Christian Daum</span> -->
+        <router-link to="/about" class="text-muted">About</router-link>
       </div>
       <ul
         class="nav col-12 col-md-5 justify-content-center justify-content-md-end list-unstyled d-flex"
