@@ -34,18 +34,17 @@
           <div class="col-6">
             <h4>Search the Galaxy</h4>
             <p class="text-muted">
-              But if the complexity of the universe is too much to grasp for you, my young padawan,
-              search for a specific planet instead (and kindly press enter once you're done typing):
+              But if the complexity of the universe is too much to grasp for you, my young Padawan,
+              search for a specific planet instead:
             </p>
-            <form @submit.prevent="searchGalaxy()" class="search-form">
-              <input
-                id="galaxy-on-page-search"
-                type="text"
-                class="form-control"
-                placeholder="Search the Galaxy!"
-                v-model="search"
-              />
-            </form>
+            <input
+              id="galaxy-on-page-search"
+              type="text"
+              class="form-control"
+              placeholder="Search the Galaxy!"
+              v-model="search"
+              @input="searchGalaxy()"
+            />
           </div>
           <div class="col-12 p-5 pb-0">
             <h2>- Results -</h2>
@@ -63,12 +62,13 @@
               <h5>
                 {{ planets.length }} / {{ totalPlanets }} Planets loaded
                 {{ search && `containing your query ${search}` }}
+                {{ canRenderNextPage() && `(keep scrolling down for more)` }}
               </h5>
             </div>
           </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-5 gy-5">
+        <div ref="scrollComponent" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-5 gy-5">
           <PlanetListItem v-for="(planet, idx) in planets" :key="idx" :planet="planet" />
         </div>
       </div>
@@ -84,69 +84,93 @@ import PlanetListItem from "../components/PlanetListItem.vue";
 
 export default {
   name: "Galaxy",
+
   setup() {
     const axios = inject("axios"); // inject axios
     const search = ref("");
     const planets = ref([]);
     const totalPlanets = ref(0);
+    const nextPageUrl = ref(null);
     const isLoading = ref(false);
     const hasError = ref(false);
     const error = ref(null);
-    const bigBang = async () => {
-      isLoading.value = true;
-      hasError.value = false;
-      try {
-        let jsonResult = await axios.get(`${env.apiPlanetsUrl}`);
-        planets.value = jsonResult?.data?.results;
-        totalPlanets.value = jsonResult?.data?.count;
-        search.value = "";
-        isLoading.value = false;
-        console.log(jsonResult);
-        console.log(planets.value);
-      } catch (e) {
-        error.value = e;
-        hasError.value = true;
-        console.log("error fetching data: ", e);
-      }
+    const scrollComponent = ref(null);
+
+    const bigBang = () => {
+      search.value = "";
+      loadPlanets();
     };
-    // TODO: This part is going to be replaced by a global search
-    const searchGalaxy = async () => {
+    const loadPlanets = async ({ composeQuery = false, loadMore = false } = {}) => {
+      console.log("BIG BANG");
       isLoading.value = true;
       hasError.value = false;
+
       try {
-        if (search.value != "") {
-          let jsonResult = await axios.get(`${env.apiPlanetsUrl}?search=${search.value}`);
+        const apiBaseUrl = loadMore ? nextPageUrl.value : env.apiPlanetsUrl;
+
+        const apiUrlParams =
+          composeQuery && search.value && search.value != "" ? `?search=${search.value}` : "";
+        const apiUrl = `${apiBaseUrl}${apiUrlParams}`;
+
+        // fetch planets from swapi
+        let jsonResult = await axios.get(`${apiUrl}`);
+
+        if (loadMore) {
+          console.log("YEAH IT'S TRUE - WE LOAD MORE!");
+          const newPlanets = jsonResult?.data?.results;
+          planets.value = [...planets.value, ...(newPlanets || [])];
+        } else {
           planets.value = jsonResult?.data?.results;
-          totalPlanets.value = jsonResult?.data?.count;
-          isLoading.value = false;
-          // search.value = "";
-          console.log(jsonResult);
-          console.log(planets.value);
         }
+
+        totalPlanets.value = jsonResult?.data?.count;
+        nextPageUrl.value = jsonResult?.data?.next || null;
+
+        console.log("LOAD MORE - nextPageUrl.value: ", nextPageUrl.value);
+
+        // composeQuery.value = false;
+        if (!(search.value && search.value != "")) search.value = ""; // clear previous searches
+        isLoading.value = false;
       } catch (e) {
         error.value = e;
         hasError.value = true;
         console.log("error fetching data: ", e);
       }
     };
+    const searchGalaxy = () => {
+      loadPlanets({ composeQuery: true });
+    };
+    const canRenderNextPage = () => {
+      return !isLoading.value && nextPageUrl.value != null;
+    };
+    const handleScroll = async () => {
+      if (canRenderNextPage()) {
+        let scrollEl = scrollComponent.value;
+        if (scrollEl.getBoundingClientRect().bottom < window.innerHeight) {
+          console.log("INFINITE SCROLL TRIGGERED!");
+          await loadPlanets({ loadMore: true });
+        }
+      }
+    };
+
     return {
       search,
       planets,
       totalPlanets,
+      nextPageUrl,
+      canRenderNextPage,
       bigBang,
       searchGalaxy,
+      loadPlanets,
+      error,
       isLoading,
       hasError,
-      error,
+      scrollComponent,
+      handleScroll,
     };
   },
-  methods: {
-    handleScroll() {
-      console.log("yihah - los scrollos!");
-    },
-  },
+
   mounted() {
-    this.planetsList = this.bigBang();
     window.addEventListener("scroll", this.handleScroll);
   },
   components: { PlanetListItem },
@@ -157,7 +181,6 @@ export default {
 #page-top-section {
   height: 50vh;
   background-image: url("../assets/shutterstock_127633466.jpg");
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
