@@ -49,47 +49,27 @@
           </div>
           <div class="col-12 p-5 pb-0">
             <h2>- Results -</h2>
-            <h4>
-              {{ planets.length }} / {{ totalPlanets }} Planets
-              {{ search && `containing your query ${search}` }}
-            </h4>
-          </div>
-        </div>
 
-        <div class="row row-cols-1 row-cols-md-2 gx-5 gy-5">
-          <div class="col planets-grid-item" v-for="planet in planets" :key="planet.name">
-            <div class="card">
-              <!-- TODO: Error Handling  -->
-              <!-- <div v-if="isLoading">Loading ...</div>
-                      <div v-else="error">
-                        {{ error.message }} <button @click="getUsers">try again</button>
-                      </div>
-                      <div v-else>{{ data }}</div> -->
-
-              <img src="../assets/shutterstock_127633466.jpg" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title">{{ planet.name }}</h5>
-                <p class="card-text">
-                  The planet {{ planet.name }} has a {{ planet.climate }} climate and a
-                  {{ planet.terrain }} terrain -
-                  {{
-                    planet.surface_water > 0
-                      ? `${planet.surface_water} % of its surface is covered with water`
-                      : "its surface is not covered with water at all"
-                  }}
-                </p>
-                <p class="card-text">
-                  <router-link :to="`/planet/` + planet.name">Visit {{ planet.name }}!</router-link>
-                </p>
-              </div>
+            <div v-if="isLoading">
+              <h5>...Loading Planets...</h5>
+            </div>
+            <div v-else-if="hasError">
+              <h5>Error {{ error.message }}</h5>
+              <button type="button" class="btn btn-primary btn-sm" @click="bigBang()">
+                Try again!
+              </button>
+            </div>
+            <div v-else>
+              <h5>
+                {{ planets.length }} / {{ totalPlanets }} Planets loaded
+                {{ search && `containing your query ${search}` }}
+              </h5>
             </div>
           </div>
-          <!-- </div>
-              </div> -->
         </div>
 
-        <div class="row">
-          <div class="col">...</div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-5 gy-5">
+          <PlanetListItem v-for="(planet, idx) in planets" :key="idx" :planet="planet" />
         </div>
       </div>
     </section>
@@ -100,6 +80,7 @@
 import { ref } from "vue";
 import { inject } from "vue";
 import env from "@/env.js";
+import PlanetListItem from "../components/PlanetListItem.vue";
 
 export default {
   name: "Galaxy",
@@ -108,12 +89,12 @@ export default {
     const search = ref("");
     const planets = ref([]);
     const totalPlanets = ref(0);
-
     const isLoading = ref(false);
+    const hasError = ref(false);
     const error = ref(null);
-
     const bigBang = async () => {
       isLoading.value = true;
+      hasError.value = false;
       try {
         let jsonResult = await axios.get(`${env.apiPlanetsUrl}`);
         planets.value = jsonResult?.data?.results;
@@ -124,13 +105,14 @@ export default {
         console.log(planets.value);
       } catch (e) {
         error.value = e;
+        hasError.value = true;
         console.log("error fetching data: ", e);
       }
     };
-
     // TODO: This part is going to be replaced by a global search
     const searchGalaxy = async () => {
       isLoading.value = true;
+      hasError.value = false;
       try {
         if (search.value != "") {
           let jsonResult = await axios.get(`${env.apiPlanetsUrl}?search=${search.value}`);
@@ -143,10 +125,10 @@ export default {
         }
       } catch (e) {
         error.value = e;
+        hasError.value = true;
         console.log("error fetching data: ", e);
       }
     };
-
     return {
       search,
       planets,
@@ -154,9 +136,20 @@ export default {
       bigBang,
       searchGalaxy,
       isLoading,
+      hasError,
       error,
     };
   },
+  methods: {
+    handleScroll() {
+      console.log("yihah - los scrollos!");
+    },
+  },
+  mounted() {
+    this.planetsList = this.bigBang();
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  components: { PlanetListItem },
 };
 </script>
 

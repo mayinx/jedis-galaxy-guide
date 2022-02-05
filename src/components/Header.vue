@@ -125,8 +125,7 @@ export default {
 #nav {
   padding: 0.5rem;
 }
-#nav a {
-}
+
 input#galaxy-search {
   height: 3rem;
 }
