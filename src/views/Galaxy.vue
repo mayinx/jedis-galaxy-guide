@@ -18,7 +18,7 @@
 
     <section id="page-content-section">
       <div class="container">
-        <div class="row mb-5">
+        <div ref="listOptionsCnt" class="row mb-5 pt-lg-3">
           <div class="col-6">
             <h4>Initialize BigBang</h4>
             <p class="text-muted">
@@ -68,7 +68,11 @@
           </div>
         </div>
 
-        <div ref="scrollComponent" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-5 gy-5">
+        <div
+          ref="planetsListCnt"
+          style="min-height: 15rem"
+          class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-5 gy-5"
+        >
           <PlanetListItem v-for="(planet, idx) in planets" :key="idx" :planet="planet" />
         </div>
       </div>
@@ -94,10 +98,12 @@ export default {
     const isLoading = ref(false);
     const hasError = ref(false);
     const error = ref(null);
-    const scrollComponent = ref(null);
+    const planetsListCnt = ref(null);
+    const listOptionsCnt = ref(null);
 
     const bigBang = () => {
       search.value = "";
+      scrollListOptionsIntoView();
       loadPlanets();
     };
     const loadPlanets = async ({ composeQuery = false, loadMore = false } = {}) => {
@@ -143,9 +149,17 @@ export default {
     const canRenderNextPage = () => {
       return !isLoading.value && nextPageUrl.value != null;
     };
-    const handleScroll = async () => {
+
+    const scrollListOptionsIntoView = () => {
+      let scrollEl = listOptionsCnt.value;
+      if (scrollEl) {
+        scrollEl.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
+    const handleInfiniteScroll = async () => {
       if (canRenderNextPage()) {
-        let scrollEl = scrollComponent.value;
+        let scrollEl = planetsListCnt.value;
         if (scrollEl.getBoundingClientRect().bottom < window.innerHeight) {
           console.log("INFINITE SCROLL TRIGGERED!");
           await loadPlanets({ loadMore: true });
@@ -161,17 +175,17 @@ export default {
       canRenderNextPage,
       bigBang,
       searchGalaxy,
-      loadPlanets,
       error,
       isLoading,
       hasError,
-      scrollComponent,
-      handleScroll,
+      planetsListCnt,
+      listOptionsCnt,
+      handleInfiniteScroll,
     };
   },
 
   mounted() {
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("scroll", this.handleInfiniteScroll);
   },
   components: { PlanetListItem },
 };
@@ -180,7 +194,8 @@ export default {
 <style scoped>
 #page-top-section {
   height: 50vh;
-  background-image: url("../assets/shutterstock_127633466.jpg");
+  /* background-image: url("../assets/shutterstock_127633466.jpg"); */
+  background-image: url("../assets/shutterstock_1041167386.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
