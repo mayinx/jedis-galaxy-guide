@@ -6,8 +6,8 @@
           <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
             <h2>A Jedi's Bucket List</h2>
             <p className=" fs-5">
-              Your planned and recommended trips - places you absolutely must see before you kick
-              the bucket for good!
+              Your planned and recommended trips - places in that "Galaxy far far away" you
+              absolutely must see before you kick the bucket for good!
             </p>
           </div>
         </div>

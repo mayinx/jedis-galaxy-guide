@@ -39,7 +39,7 @@
               <span class="ms-3 ms-lg-1 align-middle">Jedi's Bucket List</span>
             </router-link>
           </div>
-          <form class="d-flex">
+          <form class="d-flex mb-3 mb-lg-0">
             <div class="input-group">
               <!-- <input
                 id="galaxy-search"
@@ -56,7 +56,7 @@
                 placeholder="Search the Galaxy!"
                 disabled
               />
-              <!-- <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button> -->
+
               <button type="button" disabled class="btn btn-secondary">
                 <i class="bi-search"></i>
               </button>
@@ -122,6 +122,9 @@ export default {
 </script>
 
 <style>
+header {
+  min-height: 85px;
+}
 #nav {
   padding: 0.5rem;
 }
