@@ -21,41 +21,41 @@
         <div ref="listOptionsCnt" class="row g-5 pt-lg-3">
           <div class="col-6 col-lg-4 d-flex flex-column jus justify-content-between">
             <h4>Initialize BigBang</h4>
-            <p class="text-muted d-none d-sm-block">
+            <p class="text-muted d-none d-sm-block px-lg-3">
               You know, what God does every day as part of his morning routine - brush his teeth,
               bring out the trash, switch on the Universe, create another Galaxy... that stuff...!
             </p>
 
-            <button type="button" class="btn btn-primary btn-lg" @click="bigBang()">
+            <button type="button" class="btn btn-primary btn-lg mx-lg-3" @click="bigBang()">
               Big Bang!
             </button>
           </div>
 
           <div class="col-6 col-lg-4 d-flex flex-column jus justify-content-between order-lg-last">
             <h4>Destroy Galaxy</h4>
-            <p class="text-muted d-none d-sm-block">
+            <p class="text-muted d-none d-sm-block px-lg-3">
               Powerful you have become, the dark side I sense in you. But beware: Once you start
               down the dark path, forever will it dominate your destiny. Consume you, it will.
             </p>
 
-            <button type="button" class="btn btn-danger btn-lg" @click="deathStar()">
+            <button type="button" class="btn btn-danger btn-lg mx-lg-3" @click="deathStar()">
               Death Star!
             </button>
           </div>
 
           <div class="col-12 col-lg-4 d-flex flex-column jus justify-content-between">
             <h4>Search the Galaxy</h4>
-            <p class="text-muted d-none d-sm-block">
+            <p class="text-muted d-none d-sm-block px-lg-3">
               If the complexity of the universe is too much to grasp for you, my young Padawan,
               there are other ways than destruction. Search for a specific planet instead:
             </p>
             <input
               id="galaxy-on-page-search"
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
               placeholder="Search the Galaxy!"
               v-model="search"
-              @input="searchGalaxy()"
+              @input.prevent="searchGalaxy()"
               @click="scrollListOptionsIntoView()"
             />
           </div>
@@ -197,7 +197,7 @@ export default {
     const handleInfiniteScroll = async () => {
       if (canRenderNextPage()) {
         let scrollEl = planetsListCnt.value;
-        if (scrollEl.getBoundingClientRect().bottom < window.innerHeight) {
+        if (scrollEl && scrollEl.getBoundingClientRect().bottom < window.innerHeight) {
           console.log("INFINITE SCROLL TRIGGERED!");
           await loadPlanets({ loadMore: true });
         }
