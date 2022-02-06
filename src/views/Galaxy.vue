@@ -18,12 +18,12 @@
 
     <section id="page-content-section">
       <div class="container">
-        <div ref="listOptionsCnt" class="row mb-5 pt-lg-3">
-          <div class="col-6">
+        <div ref="listOptionsCnt" class="row g-5 pt-lg-3">
+          <div class="col-6 col-lg-4 d-flex flex-column jus justify-content-between">
             <h4>Initialize BigBang</h4>
-            <p class="text-muted">
+            <p class="text-muted d-none d-sm-block">
               You know, what God does every day as part of his morning routine - brush his teeth,
-              bring out the trash, switch on the Universe... that stuff...
+              bring out the trash, switch on the Universe, create another Galaxy... that stuff...!
             </p>
 
             <button type="button" class="btn btn-primary btn-lg" @click="bigBang()">
@@ -31,11 +31,23 @@
             </button>
           </div>
 
-          <div class="col-6">
+          <div class="col-6 col-lg-4 d-flex flex-column jus justify-content-between order-lg-last">
+            <h4>Destroy Galaxy</h4>
+            <p class="text-muted d-none d-sm-block">
+              Powerful you have become, the dark side I sense in you. But beware: Once you start
+              down the dark path, forever will it dominate your destiny. Consume you, it will.
+            </p>
+
+            <button type="button" class="btn btn-danger btn-lg" @click="deathStar()">
+              Death Star!
+            </button>
+          </div>
+
+          <div class="col-12 col-lg-4 d-flex flex-column jus justify-content-between">
             <h4>Search the Galaxy</h4>
-            <p class="text-muted">
-              But if the complexity of the universe is too much to grasp for you, my young Padawan,
-              search for a specific planet instead:
+            <p class="text-muted d-none d-sm-block">
+              If the complexity of the universe is too much to grasp for you, my young Padawan,
+              there are other ways than destruction. Search for a specific planet instead:
             </p>
             <input
               id="galaxy-on-page-search"
@@ -44,8 +56,11 @@
               placeholder="Search the Galaxy!"
               v-model="search"
               @input="searchGalaxy()"
+              @click="scrollListOptionsIntoView()"
             />
           </div>
+        </div>
+        <div class="row mb-5">
           <div class="col-12 p-5 pb-0">
             <h2>- Results -</h2>
 
@@ -67,7 +82,6 @@
             </div>
           </div>
         </div>
-
         <div
           ref="planetsListCnt"
           style="min-height: 15rem"
@@ -102,27 +116,54 @@ export default {
     const listOptionsCnt = ref(null);
 
     const bigBang = () => {
-      search.value = "";
+      clearSearch();
       scrollListOptionsIntoView();
       loadPlanets();
     };
+
+    const deathStar = () => {
+      clearSearch();
+      scrollListOptionsIntoView();
+      clearPlanets();
+    };
+
+    const searchGalaxy = () => {
+      loadPlanets({ composeQuery: true });
+    };
+
+    const clearPlanets = () => {
+      isLoading.value = false;
+      hasError.value = false;
+      error.value = null;
+
+      planets.value = [];
+      totalPlanets.value = 0;
+      nextPageUrl.value = null;
+    };
+
+    const clearSearch = () => (search.value = "");
+
     const loadPlanets = async ({ composeQuery = false, loadMore = false } = {}) => {
-      console.log("BIG BANG");
       isLoading.value = true;
       hasError.value = false;
 
       try {
+        // TODO: Brrr - refactor this
         const apiBaseUrl = loadMore ? nextPageUrl.value : env.apiPlanetsUrl;
-
         const apiUrlParams =
           composeQuery && search.value && search.value != "" ? `?search=${search.value}` : "";
         const apiUrl = `${apiBaseUrl}${apiUrlParams}`;
+
+        console.log("------ LOAD PLANETS ------");
+        console.log("-- apiUrl: ", apiUrl);
+        console.log("-- composeQuery: ", composeQuery);
+        console.log("-- loadMore: ", loadMore);
+        console.log("--------------------------");
 
         // fetch planets from swapi
         let jsonResult = await axios.get(`${apiUrl}`);
 
         if (loadMore) {
-          console.log("YEAH IT'S TRUE - WE LOAD MORE!");
           const newPlanets = jsonResult?.data?.results;
           planets.value = [...planets.value, ...(newPlanets || [])];
         } else {
@@ -131,8 +172,6 @@ export default {
 
         totalPlanets.value = jsonResult?.data?.count;
         nextPageUrl.value = jsonResult?.data?.next || null;
-
-        console.log("LOAD MORE - nextPageUrl.value: ", nextPageUrl.value);
 
         // composeQuery.value = false;
         if (!(search.value && search.value != "")) search.value = ""; // clear previous searches
@@ -143,9 +182,7 @@ export default {
         console.log("error fetching data: ", e);
       }
     };
-    const searchGalaxy = () => {
-      loadPlanets({ composeQuery: true });
-    };
+
     const canRenderNextPage = () => {
       return !isLoading.value && nextPageUrl.value != null;
     };
@@ -174,12 +211,14 @@ export default {
       nextPageUrl,
       canRenderNextPage,
       bigBang,
+      deathStar,
       searchGalaxy,
       error,
       isLoading,
       hasError,
       planetsListCnt,
       listOptionsCnt,
+      scrollListOptionsIntoView,
       handleInfiniteScroll,
     };
   },
