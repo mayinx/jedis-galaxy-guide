@@ -1,20 +1,5 @@
 <template>
   <main class="home">
-    <!-- <section id="page-top-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-9 col-lg-6 p-3 text-center greeting-cnt">
-            <h2>The Jedi's Guide to the Galaxy!</h2>
-            <p className=" fs-5">
-              Enabling aspiring Jedis to safely navigate the vastness of the Galaxy -
-              <i>"to boldly go, where no man has gone before..."</i> - oops - that's the wrong
-              league, but we're all buddies here, right, Luke ;-)...
-            </p>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
     <div id="fullPageCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button
@@ -40,7 +25,7 @@
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../assets/shutterstock_127633466.jpg" class="d-block" alt="..." />
+          <img src="../assets/shutterstock_127633466-v1.jpg" class="d-block" alt="..." />
           <div class="container">
             <div class="row">
               <div class="col-9 col-lg-6 p-3 text-center greeting-cnt">
@@ -54,16 +39,22 @@
             </div>
           </div>
         </div>
+
         <div class="carousel-item">
           <img src="../assets/shutterstock_1776375335.jpg" class="d-block" alt="..." />
           <div class="container">
             <div class="row">
               <div class="col-9 col-lg-6 p-3 text-center greeting-cnt">
-                <h2>The Jedi's Guide to the Galaxy!</h2>
+                <h2>Created by a Trekkie!</h2>
                 <p className=" fs-5">
-                  Enabling aspiring Jedis to safely navigate the vastness of the Galaxy -
-                  <i>"to boldly go, where no man has gone before..."</i> - oops - that's the wrong
-                  league, <strong>but we're all buddies here, right, Luke ;-)...</strong>
+                  C'mon, Skywalker - I mean, it's not MY fault they asked a Trekkie to design a Star
+                  Wars Fan Page!
+                  <strong
+                    >The Dark Side or the Borg, Lightsaber or Phaser, Darth Vader or Q on Steroids,
+                    Yoda or Guinan from Ten Forward,
+                  </strong>
+                  - does it really matter? As long as we stay buddies, everything's gonna be all
+                  right...
                 </p>
               </div>
             </div>
@@ -74,14 +65,14 @@
 
           <div class="container">
             <div class="row">
-              <div class="col-9 col-lg-6 p-3 text-center greeting-cnt">
+              <div class="col-12 col-lg-6 p-3 text-center greeting-cnt">
                 <h6>Luke! Nooooo!</h6>
                 <h6>You need to chill, bro!</h6>
-                <h5>I beam you into smithereens!</h5>
-                <h4>Don't make me get my phaser!</h4>
-                <h3>Luke! Put that lightsaber down!</h3>
-                <!-- <h3>It's not my fault they asked a Trekkie to design a Star Wars Fan Page!</h3> -->
-                <h2>We ARE buddies, Luke, right?</h2>
+                <h5>O beam you into oblivion!</h5>
+                <h4>I waporize you into smithereens!</h4>
+                <h3>Don't make me get my phaser!</h3>
+                <h2>Luke! Put that Lightsaber down!</h2>
+                <h1>We ARE buddies, Luke, right?</h1>
               </div>
             </div>
           </div>
