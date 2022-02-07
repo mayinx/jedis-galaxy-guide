@@ -1,6 +1,7 @@
 <template>
   <main class="planet-detail">
-    <section id="page-top-section">
+    <!-- <section id="page-top-section" :style="{ 'background-image': 'url(' + image + ')' }"> -->
+    <section id="page-top-section" :style="{ 'background-image': randomImage() }">
       <div class="container">
         <div class="row">
           <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
@@ -26,33 +27,23 @@
         </div>
         <div class="row">
           <div class="col">
-            <ul class="list-group fs-3">
+            <ul class="planet-details-list list-group fs-3 shadow-lg p-3 px-md-4 px-lg-5">
               <li
                 v-for="(propertyValue, propertyName, index) in planet"
                 :key="index"
-                class="list-group-item d-flex justify-content-between align-items-center"
+                class="list-group-item"
               >
                 <span class="badge bg-secondary rounded-pill">
                   {{ propertyName.toString().toUpperCase() }}
                 </span>
-                {{
-                  Array.isArray(propertyValue)
-                    ? `${propertyValue.length + " " + propertyName}`
-                    : propertyValue
-                }}
+                <span class="value">
+                  {{
+                    Array.isArray(propertyValue)
+                      ? `${propertyValue.length + " " + propertyName}`
+                      : propertyValue
+                  }}
+                </span>
               </li>
-              <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                A list item
-                <span class="badge bg-primary rounded-pill">14</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                A second list item
-                <span class="badge bg-primary rounded-pill">2</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                A third list item
-                <span class="badge bg-primary rounded-pill">1</span>
-              </li> -->
             </ul>
           </div>
         </div>
@@ -68,6 +59,25 @@ import env from "@/env.js";
 import { inject } from "vue";
 
 export default {
+  data() {
+    return {
+      images: [
+        require("../assets/shutterstock_127633466-v2.jpg"),
+        require("../assets/shutterstock_91414394.jpg"),
+        require("../assets/shutterstock_490419343.jpg"),
+        require("../assets/shutterstock_68730523.jpg"),
+        require("../assets/shutterstock_101584243.jpg"),
+        // "https://picsum.photos/3000/1000",
+      ],
+    };
+  },
+
+  methods: {
+    randomImage() {
+      return `url("${this.images[Math.floor(Math.random() * this.images.length)]}")`;
+    },
+  },
+
   setup() {
     const axios = inject("axios"); // inject axios
     const planet = ref({});
@@ -80,7 +90,7 @@ export default {
       try {
         const planetName = route.params.name;
         // FYI: Funny - at a quick glance SWAPI-objects don't seem to carry
-        // an xplicit 'id'-attribute - just an url that includes that id - so
+        // an explicit 'id'-attribute - just an url that includes that id - so
         // parsing that id out of the url would be an option - or pass the url
         // as router link para along - or issue a search by name - for now we
         // go with the later:
@@ -105,7 +115,9 @@ export default {
 <style scoped>
 #page-top-section {
   height: 50vh;
-  background-image: url("../assets/shutterstock_127633466.jpg");
+  /* background-image: url("../assets/shutterstock_127633466.jpg");
+  background-image: url("../assets/shutterstock_91414394.jpg"); */
+  background-image: url("../assets/shutterstock_490419343.jpg");
 
   background-repeat: no-repeat;
   background-size: cover;
@@ -123,5 +135,33 @@ export default {
 
 #page-top-section .greeting-cnt p {
   color: whitesmoke;
+}
+
+.planet-details-list .badge {
+  padding: 0.5rem 1rem;
+}
+.planet-details-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #58788a;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.planet-details-list li:first-child {
+  justify-content: center;
+  font-size: 2rem;
+  padding: 1.5rem;
+  font-weight: bold;
+}
+.planet-details-list li:first-child .badge {
+  margin-right: 2rem;
+}
+.planet-details-list li:first-child .value {
+  font-size: 2.5rem;
+}
+.planet-details-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 1.5rem;
 }
 </style>

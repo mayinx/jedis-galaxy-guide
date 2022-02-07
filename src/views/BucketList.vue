@@ -33,10 +33,9 @@
 #page-top-section {
   height: 50vh;
   background-image: url("../assets/shutterstock_127633466.jpg");
-
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 50%;
+  background-position: 50% 15%;
   overflow: hidden;
   position: relative;
 }
