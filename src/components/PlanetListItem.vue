@@ -1,7 +1,7 @@
 <template>
   <div class="col d-flex">
     <div class="card shadow-lg planet">
-      <img src="../assets/shutterstock_127633466.jpg" class="card-img-top" alt="..." />
+      <img src="../assets/shutterstock_127633466-v3.jpg" class="card-img-top" alt="..." />
       <div class="card-body d-flex flex-column">
         <h5 class="card-title">{{ planet.name }}</h5>
         <p class="card-text flex-fill">
