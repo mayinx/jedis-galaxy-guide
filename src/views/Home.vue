@@ -60,12 +60,13 @@
             </div>
           </div>
         </div>
+
         <div class="carousel-item">
           <img src="../assets/shutterstock_101584243.jpg" class="d-block" alt="..." />
 
           <div class="container">
             <div class="row">
-              <div class="col-12 col-lg-6 p-3 text-center greeting-cnt">
+              <div class="col-12 col-lg-6 p-3 text-center greeting-cnt star-wars-intro-cnt">
                 <h6>Luke! Nooooo!</h6>
                 <h6>You need to chill, bro!</h6>
                 <h5>O beam you into oblivion!</h5>
@@ -98,17 +99,6 @@
       </button>
     </div>
   </main>
-
-  <!-- <div class="row pt-5 mt-5">
-          <div class="col-8 offset-4 col-lg-6 offset-lg-6 p-3 text-center greeting-cnt">
-            <h6>Luke! Nooooo!</h6>
-            <h6>You need to chill, bro!</h6>
-            <h5>I beam you into smithereens!</h5>
-            <h4>Don't make me get my phaser!</h4>
-            <h3>Luke! Put that lightsaber down!</h3>
-            <h2>We ARE buddies, Luke, right?</h2>
-          </div>
-        </div> -->
 </template>
 
 <style scoped>
@@ -130,14 +120,13 @@ main {
 }
 
 #fullPageCarousel .greeting-cnt {
-  background-color: #18181973;
-
-  color: whitesmoke;
-
   position: absolute;
   top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000000;
-  left: 10%;
+  background-color: #18181973;
+  color: whitesmoke;
 }
 #fullPageCarousel .greeting-cnt h2 {
   color: white;
@@ -145,5 +134,13 @@ main {
 
 #fullPageCarousel .greeting-cnt p {
   color: whitesmoke;
+}
+
+@media all and (min-width: 992px) {
+  #fullPageCarousel .greeting-cnt {
+    top: 10%;
+    left: 10%;
+    transform: none;
+  }
 }
 </style>

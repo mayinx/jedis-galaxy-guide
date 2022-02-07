@@ -74,9 +74,9 @@ export default {
       let renderedVal = "";
       switch (propertyName) {
         case "created":
-        case "updated":
+        case "edited":
           console.log("created at or updated at");
-          renderedVal = propertyVal;
+          renderedVal = new Date(propertyVal).toLocaleDateString("en-US");
           console.log("asdasd");
           break;
         case "url":
