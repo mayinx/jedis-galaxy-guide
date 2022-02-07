@@ -51,7 +51,7 @@
                   Wars Fan Page!
                   <strong
                     >The Dark Side or the Borg, Lightsaber or Phaser, Darth Vader or Q on Steroids,
-                    Yoda or Guinan from Ten Forward,
+                    Yoda or Guinan from Ten Forward
                   </strong>
                   - does it really matter? As long as we stay buddies, everything's gonna be all
                   right...

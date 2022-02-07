@@ -21,24 +21,36 @@
           class="navbar-toggler"
           data-bs-toggle="collapse"
           data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse justify-content-between gap-lg-2" id="navbarCollapse">
-          <div class="fs-5 gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
-            <router-link to="/galaxy" class="nav-item nav-link d-flex">
-              <v-icon name="gi-galaxy" class="align-middle" scale="1.5" />
-              <span class="ms-3 ms-lg-1 align-middle">The Galaxy</span>
-            </router-link>
-            <router-link to="/jedis-path" class="nav-item nav-link d-flex">
-              <v-icon name="gi-interstellar-path" size="1" class="align-middle" scale="1.5" />
-              <span class="ms-3 ms-lg-1 align-middle">Jedi's Path</span>
-            </router-link>
-            <router-link to="/bucket-list" class="nav-item nav-link d-flex">
-              <v-icon name="gi-empty-wood-bucket-handle" class="align-middle" scale="1.5" />
-              <span class="ms-3 ms-lg-1 align-middle">Jedi's Bucket List</span>
-            </router-link>
-          </div>
+          <ul class="fs-5 gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
+            <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+              <router-link to="/galaxy" class="nav-link d-flex">
+                <v-icon name="gi-galaxy" class="align-middle" scale="1.5" />
+                <span class="flex-fill align-middle text-start ms-3 ms-lg-1">The Galaxy</span>
+              </router-link>
+            </li>
+            <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+              <router-link to="/jedis-path" class="nav-item nav-link d-flex">
+                <v-icon name="gi-interstellar-path" size="1" class="align-middle" scale="1.5" />
+                <span class="flex-fill align-middle text-start ms-3 ms-lg-1">Jedi's Path</span>
+              </router-link>
+            </li>
+            <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+              <router-link to="/bucket-list" class="nav-item nav-link d-flex">
+                <v-icon name="gi-empty-wood-bucket-handle" class="align-middle" scale="1.5" />
+                <span class="flex-fill align-middle text-start ms-3 ms-lg-1"
+                  >Jedi's Bucket List</span
+                >
+              </router-link>
+            </li>
+          </ul>
           <form class="d-flex mb-3 mb-lg-0">
             <div class="input-group">
               <!-- <input
@@ -84,7 +96,6 @@ export default {
     const axios = inject("axios"); // inject axios
     const search = ref("");
     const planets = ref([]);
-
     const isLoading = ref(false);
     const error = ref(null);
 
@@ -111,6 +122,7 @@ export default {
       error,
     };
   },
+
   components: {
     "v-icon": OhVueIcon,
   },
