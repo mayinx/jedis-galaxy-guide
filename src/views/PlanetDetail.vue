@@ -29,20 +29,14 @@
           <div class="col">
             <ul class="planet-details-list list-group fs-3 shadow-lg p-3 px-md-4 px-lg-5">
               <li
-                v-for="(propertyValue, propertyName, index) in planet"
+                v-for="(propertyVal, propertyName, index) in planet"
                 :key="index"
                 class="list-group-item"
               >
                 <span class="badge bg-secondary rounded-pill">
-                  {{ propertyName.toString().toUpperCase() }}
+                  {{ propertyName.replace(/_/g, " ").toUpperCase() }}
                 </span>
-                <span class="value">
-                  {{
-                    Array.isArray(propertyValue)
-                      ? `${propertyValue.length + " " + propertyName}`
-                      : propertyValue
-                  }}
-                </span>
+                <span v-html="renderPropertyVal(propertyName, propertyVal)" class="value"> </span>
               </li>
             </ul>
           </div>
@@ -75,6 +69,27 @@ export default {
   methods: {
     randomImage() {
       return `url("${this.images[Math.floor(Math.random() * this.images.length)]}")`;
+    },
+    renderPropertyVal(propertyName, propertyVal) {
+      let renderedVal = "";
+      switch (propertyName) {
+        case "created":
+        case "updated":
+          console.log("created at or updated at");
+          renderedVal = propertyVal;
+          console.log("asdasd");
+          break;
+        case "url":
+          console.log("url");
+          renderedVal = `<a href="${propertyVal}">${this.planet.name} in SWAPI</a>`;
+          break;
+        default:
+          console.log("default");
+          renderedVal = Array.isArray(propertyVal)
+            ? `${propertyVal.length + " " + propertyName}`
+            : propertyVal;
+      }
+      return renderedVal;
     },
   },
 
@@ -142,8 +157,11 @@ export default {
 }
 .planet-details-list li {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
+  padding: 1.5rem 0.5rem;
   color: #58788a;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -153,15 +171,27 @@ export default {
   font-size: 2rem;
   padding: 1.5rem;
   font-weight: bold;
+  gap: 1rem;
 }
-.planet-details-list li:first-child .badge {
-  margin-right: 2rem;
-}
+
 .planet-details-list li:first-child .value {
   font-size: 2.5rem;
 }
 .planet-details-list li:last-child {
   border-bottom: none;
   padding-bottom: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .planet-details-list li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .planet-details-list li:first-child .badge {
+    margin-right: 2rem;
+  }
 }
 </style>
