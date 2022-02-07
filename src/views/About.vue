@@ -5,7 +5,10 @@
         <div class="row">
           <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
             <h2>About the Jedi's Guide to the Galaxy</h2>
-            <p className=" fs-5">You can't possibly imagine how it all began...</p>
+            <p className=" fs-5">
+              You can't possibly imagine how it all began... A Trekkie forced to create a Star Wars
+              Fan Page - but he acepted the challenge ;-)
+            </p>
           </div>
         </div>
       </div>

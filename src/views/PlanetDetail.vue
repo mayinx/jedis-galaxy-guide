@@ -75,16 +75,12 @@ export default {
       switch (propertyName) {
         case "created":
         case "edited":
-          console.log("created at or updated at");
           renderedVal = new Date(propertyVal).toLocaleDateString("en-US");
-          console.log("asdasd");
           break;
         case "url":
-          console.log("url");
           renderedVal = `<a href="${propertyVal}">${this.planet.name} in SWAPI</a>`;
           break;
         default:
-          console.log("default");
           renderedVal = Array.isArray(propertyVal)
             ? `${propertyVal.length + " " + propertyName}`
             : propertyVal;

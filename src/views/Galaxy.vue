@@ -154,12 +154,6 @@ export default {
           composeQuery && search.value && search.value != "" ? `?search=${search.value}` : "";
         const apiUrl = `${apiBaseUrl}${apiUrlParams}`;
 
-        console.log("------ LOAD PLANETS ------");
-        console.log("-- apiUrl: ", apiUrl);
-        console.log("-- composeQuery: ", composeQuery);
-        console.log("-- loadMore: ", loadMore);
-        console.log("--------------------------");
-
         // fetch planets from swapi
         let jsonResult = await axios.get(`${apiUrl}`);
 
@@ -198,7 +192,6 @@ export default {
       if (canRenderNextPage()) {
         let scrollEl = planetsListCnt.value;
         if (scrollEl && scrollEl.getBoundingClientRect().bottom < window.innerHeight) {
-          console.log("INFINITE SCROLL TRIGGERED!");
           await loadPlanets({ loadMore: true });
         }
       }

@@ -69,7 +69,7 @@
               <div class="col-12 col-lg-6 p-3 text-center greeting-cnt star-wars-intro-cnt">
                 <h6>Luke! Nooooo!</h6>
                 <h6>You need to chill, bro!</h6>
-                <h5>O beam you into oblivion!</h5>
+                <h5>Or beam you into oblivion!</h5>
                 <h4>I waporize you into smithereens!</h4>
                 <h3>Don't make me get my phaser!</h3>
                 <h2>Luke! Put that Lightsaber down!</h2>

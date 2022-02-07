@@ -92,14 +92,10 @@ export default {
       isLoading.value = true;
       try {
         if (search.value != "") {
-          console.log("heho - search: ", search.value);
-
           let jsonResult = await axios.get(`${env.apiPlanetsUrl}?search=${search.value}`);
           planets.value = jsonResult?.data?.results;
           isLoading.value = false;
           search.value = "";
-          console.log(jsonResult);
-          console.log(planets.value);
         }
       } catch (e) {
         error.value = e;
