@@ -15,16 +15,158 @@
       <div class="container">
         <div class="row mb-4 mt-4">
           <div class="col p-3 text-center">
-            <h1>Coming soon...</h1>
+            <h1>Your Jedi-Quest Through The Galaxy...</h1>
+            <h3 class="text-muted">Planets you already visited</h3>
+            <h3 class="text-muted">Wisdom you gathered along the way</h3>
           </div>
         </div>
         <div class="row">
-          <div class="col"></div>
+          <div class="col-12">
+            <ul class="timeline">
+              <li
+                v-for="(planet, idx) in visitedPlanets"
+                :key="idx"
+                :set="(quote = randomQuote())"
+                :planet="planet"
+                :class="idx % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'"
+              >
+                <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h3 class="mt-0">{{ planet.name }}</h3>
+                    <p>
+                      <small class="text-muted"
+                        ><i class="glyphicon glyphicon-time"></i
+                        >{{ formatDate(planet.visitedAt) }} | via
+                        <strong>{{ planet.transportation }}</strong></small
+                      >
+                    </p>
+                  </div>
+                  <div class="timeline-body">
+                    <p>
+                      {{
+                        idx === 0
+                          ? "A New Hope: The Beginning Of Your Galaxy Quest!"
+                          : `The ${idx + 1}. Step On Your Galaxy Quest`
+                      }}
+                    </p>
+                    <div class="mt-3">
+                      <h5>What you've learned</h5>
+                      <div class="card rounded-3">
+                        <div class="card-body p-5">
+                          <div class="d-flex justify-content-center mb-4">
+                            <img
+                              :src="quote.authorAvatar"
+                              class="rounded-circle shadow-1-strong"
+                              width="100"
+                              height="100"
+                            />
+                          </div>
+                          <figure class="text-center mb-0">
+                            <blockquote class="blockquote mb-4">
+                              <p>
+                                <span class="font-italic">{{ quote.quote }}</span>
+                              </p>
+                            </blockquote>
+                            <figcaption class="blockquote-footer mb-0">
+                              {{ quote.author }} in
+                              <cite title="Source Title">{{ quote.source }}</cite>
+                            </figcaption>
+                          </figure>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
   </main>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      visitedPlanets: [
+        { name: "Tatoine", visitedAt: Date.now(), transportation: "Death Star" },
+        { name: "Naboo", visitedAt: Date.now(), transportation: "CR90 corvette" },
+        { name: "Mülleimer", visitedAt: Date.now(), transportation: "Star Destroyer" },
+        { name: "Abfuhr", visitedAt: Date.now(), transportation: "Sentinel-class landing craft" },
+        { name: "Tonne", visitedAt: Date.now(), transportation: "Millennium Falcon" },
+        { name: "Riza", visitedAt: Date.now(), transportation: "Y-wing" },
+        { name: "Stray Planet", visitedAt: Date.now(), transportation: "X-wing" },
+        { name: "Stray Planet", visitedAt: Date.now(), transportation: "TIE Advanced x1" },
+        { name: "Stray Planet", visitedAt: Date.now(), transportation: "Executor" },
+        { name: "Stray Planet", visitedAt: Date.now(), transportation: "Rebel transport" },
+      ],
+
+      quotes: [
+        {
+          quote: "Your eyes can deceive you; don’t trust them.",
+          author: "Obi-Wan Kenobi",
+          source: "Star Wars Episode IV: A New Hope",
+          authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
+        },
+        {
+          quote: "Try not. Do or do not. There is no try.",
+          author: "Yoda",
+          source: "Star Wars Episode V: The Empire Strikes Back",
+          authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
+        },
+        {
+          quote: "Luminous beings we are, not this crude matter.",
+          author: "Yoda",
+          source: "The Empire Strikes Back",
+          authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
+        },
+        {
+          quote: "Who’s the more foolish: the fool or the fool who follows him?.",
+          author: "Obi-Wan Kenobi",
+          source: "A New Hope",
+          authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
+        },
+        {
+          quote: "Great, kid, don’t get cocky.",
+          author: "Han Solo",
+          source: "A New Hope",
+          authorAvatar: require("../assets/characters/Han-Solo-01-icon.png"),
+        },
+        {
+          quote: "Let go of your hate.",
+          author: "Luke Skywalker",
+          source: "Return Of The Yedi",
+          authorAvatar: require("../assets/characters/Luke-Skywalker-03-icon.png"),
+        },
+      ],
+    };
+  },
+
+  methods: {
+    randomQuote() {
+      return this.quotes[Math.floor(Math.random() * this.quotes.length)];
+    },
+
+    formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return (
+        new Intl.DateTimeFormat("de-DE").format(date) +
+        " | " +
+        new Intl.DateTimeFormat("de-DE", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        }).format(date)
+      );
+    },
+  },
+
+  setup() {},
+};
+</script>
 
 <style scoped>
 #page-top-section {
@@ -46,5 +188,186 @@
 
 #page-top-section .greeting-cnt p {
   color: whitesmoke;
+}
+
+/* JEDI'S JOURNEY */
+
+.timeline {
+  list-style: none;
+  padding: 20px 0 20px;
+  position: relative;
+}
+
+.timeline:before {
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  content: " ";
+  width: 3px;
+  background-color: #eeeeee;
+  left: 50%;
+  margin-left: -1.5px;
+}
+
+.timeline > li {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+
+.timeline > li:after {
+  clear: both;
+}
+
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+
+.timeline > li:after {
+  clear: both;
+}
+
+.timeline > li > .timeline-panel {
+  width: 46%;
+  float: left;
+  border: 1px solid #d4d4d4;
+  border-radius: 2px;
+  padding: 20px;
+  position: relative;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+
+.timeline > li > .timeline-panel:before {
+  position: absolute;
+  top: 26px;
+  right: -15px;
+  display: inline-block;
+  border-top: 15px solid transparent;
+  border-left: 15px solid #ccc;
+  border-right: 0 solid #ccc;
+  border-bottom: 15px solid transparent;
+  content: " ";
+}
+
+.timeline > li > .timeline-panel:after {
+  position: absolute;
+  top: 27px;
+  right: -14px;
+  display: inline-block;
+  border-top: 14px solid transparent;
+  border-left: 14px solid #fff;
+  border-right: 0 solid #fff;
+  border-bottom: 14px solid transparent;
+  content: " ";
+}
+
+.timeline > li > .timeline-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.5em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  margin-left: -25px;
+  background-color: #999999;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.timeline > li.timeline-item-right > .timeline-panel {
+  float: right;
+}
+
+.timeline > li.timeline-item-right > .timeline-panel:before {
+  border-left-width: 0;
+  border-right-width: 15px;
+  left: -15px;
+  right: auto;
+}
+
+.timeline > li.timeline-item-right > .timeline-panel:after {
+  border-left-width: 0;
+  border-right-width: 14px;
+  left: -14px;
+  right: auto;
+}
+
+.timeline-badge.primary {
+  background-color: #2e6da4 !important;
+}
+
+.timeline-badge.success {
+  background-color: #3f903f !important;
+}
+
+.timeline-badge.warning {
+  background-color: #f0ad4e !important;
+}
+
+.timeline-badge.danger {
+  background-color: #d9534f !important;
+}
+
+.timeline-badge.info {
+  background-color: #5bc0de !important;
+}
+
+.timeline-body > p,
+.timeline-body > ul {
+  margin-bottom: 0;
+}
+
+.timeline-body > p + p {
+  margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+  ul.timeline:before {
+    left: 40px;
+  }
+
+  ul.timeline > li > .timeline-panel {
+    width: calc(100% - 90px);
+    width: -moz-calc(100% - 90px);
+    width: -webkit-calc(100% - 90px);
+  }
+
+  ul.timeline > li > .timeline-badge {
+    left: 15px;
+    margin-left: 0;
+    top: 16px;
+  }
+
+  ul.timeline > li > .timeline-panel {
+    float: right;
+  }
+
+  ul.timeline > li > .timeline-panel:before {
+    border-left-width: 0;
+    border-right-width: 15px;
+    left: -15px;
+    right: auto;
+  }
+
+  ul.timeline > li > .timeline-panel:after {
+    border-left-width: 0;
+    border-right-width: 14px;
+    left: -14px;
+    right: auto;
+  }
 }
 </style>

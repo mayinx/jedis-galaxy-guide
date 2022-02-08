@@ -53,6 +53,7 @@ import env from "@/env.js";
 import { inject } from "vue";
 
 export default {
+  name: "PlanetDetails",
   data() {
     return {
       images: [
@@ -104,7 +105,7 @@ export default {
         // an explicit 'id'-attribute - just an url that includes that id - so
         // parsing that id out of the url would be an option - or pass the url
         // as router link para along - or issue a search by name - for now we
-        // go with the later:
+        // go with the later (this way we get "pretty urls" as well):
         let jsonResult = await axios.get(`${env.apiPlanetsUrl}?search=${planetName}`);
         planet.value = jsonResult?.data?.results[0];
         isLoading.value = false;
@@ -129,7 +130,6 @@ export default {
   /* background-image: url("../assets/shutterstock_127633466.jpg");
   background-image: url("../assets/shutterstock_91414394.jpg"); */
   background-image: url("../assets/shutterstock_490419343.jpg");
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
@@ -143,11 +143,9 @@ export default {
 #page-top-section .greeting-cnt h2 {
   color: white;
 }
-
 #page-top-section .greeting-cnt p {
   color: whitesmoke;
 }
-
 .planet-details-list .badge {
   padding: 0.5rem 1rem;
 }
@@ -169,7 +167,6 @@ export default {
   font-weight: bold;
   gap: 1rem;
 }
-
 .planet-details-list li:first-child .value {
   font-size: 2.5rem;
 }
