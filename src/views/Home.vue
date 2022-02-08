@@ -71,7 +71,7 @@
                 <h6>You need to chill, bro!</h6>
                 <h5>Or beam you into oblivion!</h5>
                 <h4>I waporize you into smithereens!</h4>
-                <h3>Don't make me get my phaser!</h3>
+                <h3>Don't make me get my Phaser!</h3>
                 <h2>Luke! Put that Lightsaber down!</h2>
                 <h1>We ARE buddies, Luke, right?</h1>
               </div>
