@@ -41,6 +41,16 @@ main {
 section {
   padding: 50px 0;
 }
+section#page-top-section {
+  padding: 50px 0;
+}
+section#page-content-section {
+  padding: 50px 1rem;
+}
+
+.btn {
+  white-space: nowrap;
+}
 /* #nav {
   padding: 30px;
 }

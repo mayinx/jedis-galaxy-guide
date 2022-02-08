@@ -2,44 +2,57 @@
   <header>
     <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid gap-lg-2 gap-xl-5">
-        <router-link
-          to="/"
-          class="active navbar-brand d-flex justify-content-center align-items-center fs-3"
-        >
-          <v-icon
-            name="fa-jedi-order"
-            class="align-middle"
-            scale="3"
-            animation="pulse"
-            speed="slow"
-          />
-          <span class="ms-1 align-middle">JG2G</span>
-        </router-link>
-
+        <div data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+          <router-link
+            to="/"
+            class="active navbar-brand d-flex justify-content-center align-items-center fs-3"
+          >
+            <v-icon
+              name="fa-jedi-order"
+              class="align-middle"
+              scale="3"
+              animation="pulse"
+              speed="slow"
+            />
+            <span class="ms-1 align-middle">JG2G</span>
+          </router-link>
+        </div>
         <button
           type="button"
           class="navbar-toggler"
           data-bs-toggle="collapse"
           data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse justify-content-between gap-lg-2" id="navbarCollapse">
-          <div class="fs-5 gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
-            <router-link to="/galaxy" class="nav-item nav-link d-flex">
-              <v-icon name="gi-galaxy" class="align-middle" scale="1.5" />
-              <span class="ms-3 ms-lg-1 align-middle">The Galaxy</span>
-            </router-link>
-            <router-link to="/jedis-path" class="nav-item nav-link d-flex">
-              <v-icon name="gi-interstellar-path" size="1" class="align-middle" scale="1.5" />
-              <span class="ms-3 ms-lg-1 align-middle">Jedi's Path</span>
-            </router-link>
-            <router-link to="/bucket-list" class="nav-item nav-link d-flex">
-              <v-icon name="gi-empty-wood-bucket-handle" class="align-middle" scale="1.5" />
-              <span class="ms-3 ms-lg-1 align-middle">Jedi's Bucket List</span>
-            </router-link>
-          </div>
-          <form class="d-flex">
+          <ul class="fs-5 gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
+            <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+              <router-link to="/galaxy" class="nav-link d-flex">
+                <v-icon name="gi-galaxy" class="align-middle" scale="1.5" />
+                <span class="flex-fill align-middle text-start ms-3 ms-lg-1">The Galaxy</span>
+              </router-link>
+            </li>
+            <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+              <router-link to="/jedis-path" class="nav-item nav-link d-flex">
+                <v-icon name="gi-interstellar-path" size="1" class="align-middle" scale="1.5" />
+                <span class="flex-fill align-middle text-start ms-3 ms-lg-1">Jedi's Path</span>
+              </router-link>
+            </li>
+            <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+              <router-link to="/bucket-list" class="nav-item nav-link d-flex">
+                <v-icon name="gi-empty-wood-bucket-handle" class="align-middle" scale="1.5" />
+                <span class="flex-fill align-middle text-start ms-3 ms-lg-1"
+                  >Jedi's Bucket List</span
+                >
+              </router-link>
+            </li>
+          </ul>
+          <form class="d-flex mb-3 mb-lg-0">
             <div class="input-group">
               <!-- <input
                 id="galaxy-search"
@@ -56,7 +69,7 @@
                 placeholder="Search the Galaxy!"
                 disabled
               />
-              <!-- <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button> -->
+
               <button type="button" disabled class="btn btn-secondary">
                 <i class="bi-search"></i>
               </button>
@@ -84,7 +97,6 @@ export default {
     const axios = inject("axios"); // inject axios
     const search = ref("");
     const planets = ref([]);
-
     const isLoading = ref(false);
     const error = ref(null);
 
@@ -92,14 +104,10 @@ export default {
       isLoading.value = true;
       try {
         if (search.value != "") {
-          console.log("heho - search: ", search.value);
-
           let jsonResult = await axios.get(`${env.apiPlanetsUrl}?search=${search.value}`);
           planets.value = jsonResult?.data?.results;
           isLoading.value = false;
           search.value = "";
-          console.log(jsonResult);
-          console.log(planets.value);
         }
       } catch (e) {
         error.value = e;
@@ -115,6 +123,7 @@ export default {
       error,
     };
   },
+
   components: {
     "v-icon": OhVueIcon,
   },
@@ -122,11 +131,13 @@ export default {
 </script>
 
 <style>
+header {
+  min-height: 85px;
+}
 #nav {
   padding: 0.5rem;
 }
-#nav a {
-}
+
 input#galaxy-search {
   height: 3rem;
 }

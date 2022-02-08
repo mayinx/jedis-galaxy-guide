@@ -6,8 +6,8 @@
           <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
             <h2>A Jedi's Bucket List</h2>
             <p className=" fs-5">
-              Your planned and recommended trips - places you absolutely must see before you kick
-              the bucket for good!
+              Your planned and recommended trips - places in that "Galaxy far far away" you
+              absolutely must see before you kick the bucket for good!
             </p>
           </div>
         </div>
@@ -33,10 +33,9 @@
 #page-top-section {
   height: 50vh;
   background-image: url("../assets/shutterstock_127633466.jpg");
-
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 50%;
+  background-position: 50% 15%;
   overflow: hidden;
   position: relative;
 }
