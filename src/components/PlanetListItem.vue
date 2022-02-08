@@ -15,7 +15,7 @@
         </p>
         <p class="card-text">
           <router-link :to="`/planet/` + planet.name">
-            <button type="button" class="btn btn-outline-secondary" @click="bigBang()">
+            <button type="button" class="btn btn-outline-secondary">
               Visit {{ planet.name }}!
             </button>
           </router-link>

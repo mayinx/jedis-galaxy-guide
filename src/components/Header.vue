@@ -2,20 +2,21 @@
   <header>
     <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid gap-lg-2 gap-xl-5">
-        <router-link
-          to="/"
-          class="active navbar-brand d-flex justify-content-center align-items-center fs-3"
-        >
-          <v-icon
-            name="fa-jedi-order"
-            class="align-middle"
-            scale="3"
-            animation="pulse"
-            speed="slow"
-          />
-          <span class="ms-1 align-middle">JG2G</span>
-        </router-link>
-
+        <div data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
+          <router-link
+            to="/"
+            class="active navbar-brand d-flex justify-content-center align-items-center fs-3"
+          >
+            <v-icon
+              name="fa-jedi-order"
+              class="align-middle"
+              scale="3"
+              animation="pulse"
+              speed="slow"
+            />
+            <span class="ms-1 align-middle">JG2G</span>
+          </router-link>
+        </div>
         <button
           type="button"
           class="navbar-toggler"
