@@ -4,8 +4,11 @@
       <div class="container">
         <div class="row">
           <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
-            <h2>A Jedi's Path through the Galaxy!</h2>
-            <p className=" fs-5">Your previous & favorite trips through the Galaxy...</p>
+            <h2>A Jedi's Path Through The Galaxy!</h2>
+            <p className=" fs-5">
+              Your previous trips through the Galaxy: Planets you visited, peeps you've met, wisdom
+              you gathered along the way...
+            </p>
           </div>
         </div>
       </div>
@@ -30,7 +33,10 @@
                 :planet="planet"
                 :class="idx % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'"
               >
-                <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                <div class="timeline-badge">
+                  <!-- <i class="glyphicon glyphicon-check"></i> -->
+                  <img :src="randomPlanetIcon()" />
+                </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
                     <h3 class="mt-0">{{ planet.name }}</h3>
@@ -104,6 +110,17 @@ export default {
         { name: "Stray Planet", visitedAt: Date.now(), transportation: "Rebel transport" },
       ],
 
+      planetIcons: [
+        require("../assets/planets/02 mercury.png"),
+        require("../assets/planets/03 venus.png"),
+        require("../assets/planets/05 moon.png"),
+        require("../assets/planets/06 mars.png"),
+        require("../assets/planets/07 jupiter.png"),
+        require("../assets/planets/09 uranus.png"),
+        require("../assets/planets/10 neptune.png"),
+        require("../assets/planets/11 pluto.png"),
+        require("../assets/planets/thanatos.png"),
+      ],
       quotes: [
         {
           quote: "Your eyes can deceive you; don’t trust them.",
@@ -148,6 +165,9 @@ export default {
   methods: {
     randomQuote() {
       return this.quotes[Math.floor(Math.random() * this.quotes.length)];
+    },
+    randomPlanetIcon() {
+      return this.planetIcons[Math.floor(Math.random() * this.planetIcons.length)];
     },
 
     formatDate(dateStr) {
@@ -235,7 +255,7 @@ export default {
 }
 
 .timeline > li > .timeline-panel {
-  width: 46%;
+  width: 45%;
   float: left;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
@@ -270,7 +290,7 @@ export default {
 }
 
 .timeline > li > .timeline-badge {
-  color: #fff;
+  /* color: #fff;
   width: 50px;
   height: 50px;
   line-height: 50px;
@@ -280,12 +300,27 @@ export default {
   top: 16px;
   left: 50%;
   margin-left: -25px;
-  background-color: #999999;
   z-index: 100;
   border-top-right-radius: 50%;
   border-top-left-radius: 50%;
   border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
+  border-bottom-left-radius: 50%; */
+
+  color: #fff;
+  width: 75px;
+  height: 75px;
+  line-height: 75px;
+  font-size: 1.5em;
+  text-align: center;
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  margin-left: -38px;
+  z-index: 100;
+}
+.timeline > li > .timeline-badge img {
+  width: inherit;
+  height: inherit;
 }
 
 .timeline > li.timeline-item-right > .timeline-panel {
@@ -335,7 +370,8 @@ export default {
   margin-top: 5px;
 }
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) { */
+@media (max-width: 991px) {
   ul.timeline:before {
     left: 40px;
   }
@@ -348,8 +384,8 @@ export default {
 
   ul.timeline > li > .timeline-badge {
     left: 15px;
-    margin-left: 0;
-    top: 16px;
+    margin-left: -15px;
+    top: 8px;
   }
 
   ul.timeline > li > .timeline-panel {
