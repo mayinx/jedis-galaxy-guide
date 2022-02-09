@@ -34,28 +34,27 @@
                 :class="idx % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'"
               >
                 <div class="timeline-badge">
-                  <!-- <i class="glyphicon glyphicon-check"></i> -->
                   <img :src="randomPlanetIcon()" />
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
                     <h3 class="mt-0">{{ planet.name }}</h3>
                     <p>
-                      <small class="text-muted"
-                        ><i class="glyphicon glyphicon-time"></i
-                        >{{ formatDate(planet.visitedAt) }} | via
+                      <small class="text-muted">
+                        Visited {{ formatDate(planet.visitedAt, true) }} | via
                         <strong>{{ planet.transportation }}</strong></small
                       >
                     </p>
-                  </div>
-                  <div class="timeline-body">
-                    <p>
+                    <p class="text-muted">
                       {{
                         idx === 0
                           ? "A New Hope: The Beginning Of Your Galaxy Quest!"
-                          : `The ${idx + 1}. Step On Your Galaxy Quest`
+                          : `Chapter ${idx + 1} Of Your Galaxy Quest`
                       }}
                     </p>
+                  </div>
+                  <div class="timeline-body">
+                    <p></p>
                     <div class="mt-3">
                       <h5>What you've learned</h5>
                       <div class="card rounded-3">
@@ -98,16 +97,16 @@ export default {
   data() {
     return {
       visitedPlanets: [
-        { name: "Tatoine", visitedAt: Date.now(), transportation: "Death Star" },
-        { name: "Naboo", visitedAt: Date.now(), transportation: "CR90 corvette" },
-        { name: "Mülleimer", visitedAt: Date.now(), transportation: "Star Destroyer" },
-        { name: "Abfuhr", visitedAt: Date.now(), transportation: "Sentinel-class landing craft" },
-        { name: "Tonne", visitedAt: Date.now(), transportation: "Millennium Falcon" },
-        { name: "Riza", visitedAt: Date.now(), transportation: "Y-wing" },
-        { name: "Stray Planet", visitedAt: Date.now(), transportation: "X-wing" },
-        { name: "Stray Planet", visitedAt: Date.now(), transportation: "TIE Advanced x1" },
-        { name: "Stray Planet", visitedAt: Date.now(), transportation: "Executor" },
-        { name: "Stray Planet", visitedAt: Date.now(), transportation: "Rebel transport" },
+        // { name: "Tatoine", visitedAt: Date.now(), transportation: "Death Star" },
+        // { name: "Naboo", visitedAt: Date.now(), transportation: "CR90 corvette" },
+        // { name: "Mülleimer", visitedAt: Date.now(), transportation: "Star Destroyer" },
+        // { name: "Abfuhr", visitedAt: Date.now(), transportation: "Sentinel-class landing craft" },
+        // { name: "Tonne", visitedAt: Date.now(), transportation: "Millennium Falcon" },
+        // { name: "Riza", visitedAt: Date.now(), transportation: "Y-wing" },
+        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "X-wing" },
+        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "TIE Advanced x1" },
+        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "Executor" },
+        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "Rebel transport" },
       ],
 
       planetIcons: [
@@ -116,7 +115,6 @@ export default {
         require("../assets/planets/05 moon.png"),
         require("../assets/planets/06 mars.png"),
         require("../assets/planets/07 jupiter.png"),
-        require("../assets/planets/09 uranus.png"),
         require("../assets/planets/10 neptune.png"),
         require("../assets/planets/11 pluto.png"),
         require("../assets/planets/thanatos.png"),
@@ -170,11 +168,13 @@ export default {
       return this.planetIcons[Math.floor(Math.random() * this.planetIcons.length)];
     },
 
-    formatDate(dateStr) {
+    formatDate(dateStr, prefix = false) {
       const date = new Date(dateStr);
       return (
+        (prefix ? "on " : "") +
         new Intl.DateTimeFormat("de-DE").format(date) +
         " | " +
+        (prefix ? "at " : "") +
         new Intl.DateTimeFormat("de-DE", {
           hour: "numeric",
           minute: "numeric",
@@ -184,7 +184,20 @@ export default {
     },
   },
 
-  setup() {},
+  setup() {
+    // TODO: Import this instead
+    const cuVisitedPlanets = () => {
+      return JSON.parse(localStorage.getItem("visitedPlanets")) || [];
+    };
+
+    return {
+      cuVisitedPlanets,
+    };
+  },
+
+  mounted() {
+    this.visitedPlanets = this.cuVisitedPlanets();
+  },
 };
 </script>
 

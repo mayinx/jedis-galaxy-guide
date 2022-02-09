@@ -1,6 +1,5 @@
 <template>
   <main class="planet-detail">
-    <!-- <section id="page-top-section" :style="{ 'background-image': 'url(' + image + ')' }"> -->
     <section id="page-top-section" :style="{ 'background-image': randomImage() }">
       <div class="container">
         <div class="row">
@@ -71,6 +70,7 @@ export default {
     randomImage() {
       return `url("${this.images[Math.floor(Math.random() * this.images.length)]}")`;
     },
+
     renderPropertyVal(propertyName, propertyVal) {
       let renderedVal = "";
       switch (propertyName) {
@@ -97,6 +97,48 @@ export default {
     const isLoading = ref(false);
     const error = ref(null);
 
+    const spaceships = ref([
+      "Death Star",
+      "CR90 Corvette",
+      "Star Destroyer",
+      "Sentinel-Class Landing Craft",
+      "Millennium Falcon",
+      "X-Wing",
+      "Y-Wing",
+      "TIE Advanced X1",
+      "Executor",
+      "Rebel Transport",
+    ]);
+
+    const randomSpaceship = () => {
+      return spaceships.value[Math.floor(Math.random() * spaceships.value.length)];
+    };
+
+    // TODO: Extract local storage stuff into data-module or customHook or similar
+    const cuVisitedPlanets = () => {
+      return JSON.parse(localStorage.getItem("visitedPlanets")) || [];
+    };
+    // update db
+    const setCuVisitedPlanets = ({ name }) => {
+      let data = cuVisitedPlanets();
+      const newData = {
+        name,
+        visitedAt: Date.now(),
+        transportation: randomSpaceship(),
+      };
+      // console.log("data: ", data);
+      // newData["visitedAt"] = Date.now();
+      // newData["isFavorited"] = false;
+      // newData["isBucket"] = false;
+      data.push(newData);
+
+      try {
+        localStorage.setItem("visitedPlanets", JSON.stringify(data));
+      } catch (error) {
+        alert("There was an error while saving. Did you exceed your local storage quota?");
+      }
+    };
+
     onBeforeMount(async () => {
       isLoading.value = true;
       try {
@@ -109,6 +151,7 @@ export default {
         let jsonResult = await axios.get(`${env.apiPlanetsUrl}?search=${planetName}`);
         planet.value = jsonResult?.data?.results[0];
         isLoading.value = false;
+        if (planet.value) setCuVisitedPlanets(planet.value);
       } catch (e) {
         error.value = e;
         console.log("error fetching data: ", e);
