@@ -5,9 +5,18 @@
         <div class="row">
           <div class="col-10 col-lg-6 p-3 text-center greeting-cnt">
             <h2>A Jedi's Path Through The Galaxy!</h2>
-            <p className=" fs-5">
+            <p class="sub">
               Your previous trips through the Galaxy: Planets you visited, peeps you've met, wisdom
               you gathered along the way...
+            </p>
+            <p class="d-flex gap-3 justify-content-center">
+              <button type="button" class="btn btn-primary btn" @click="explorePath()">
+                Explore Path
+              </button>
+
+              <button type="button" class="btn btn-primary btn" @click="clearPath()">
+                Clear Path
+              </button>
             </p>
           </div>
         </div>
@@ -16,7 +25,7 @@
 
     <section id="page-content-section">
       <div class="container">
-        <div class="row mb-4 mt-4">
+        <div ref="pathHeaderRowCnt" class="row mb-4 mt-4">
           <div class="col p-3 text-center">
             <h1>Your Jedi-Quest Through The Galaxy...</h1>
             <h3 class="text-muted">Planets you already visited</h3>
@@ -26,7 +35,32 @@
         <div class="row">
           <div class="col-12">
             <ul class="timeline">
+              <li v-if="!visitedPlanets || !visitedPlanets.length" class="timeline-item-left">
+                <div class="timeline-badge">
+                  <img :src="earthIcon" />
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h3 class="mt-0">Still on Earth?</h3>
+                    <p>
+                      <small class="text-muted">Since birth</small>
+                    </p>
+                    <p class="text-muted">
+                      You haven't even begun your Galaxy Quest?! Head over to the Galaxy-section and
+                      start exploring that thing!
+                    </p>
+                    <p class="text-muted">
+                      For each visited planet an entry will be created here... along with the peeps
+                      you've met there and the wisdom you've gathered on you journey to the truth!
+                    </p>
+                  </div>
+                  <div class="timeline-body">
+                    <p></p>
+                  </div>
+                </div>
+              </li>
               <li
+                v-else
                 v-for="(planet, idx) in visitedPlanets"
                 :key="idx"
                 :set="(quote = randomQuote())"
@@ -94,11 +128,14 @@
 
 <script>
 import importedQuotes from "../data/quotes";
+import { ref } from "vue";
+const pathHeaderRowCnt = ref(null);
+
 export default {
   data() {
     return {
       visitedPlanets: [],
-
+      earthIcon: require("../assets/planets/04 earth.png"),
       planetIcons: [
         require("../assets/planets/02 mercury.png"),
         require("../assets/planets/03 venus.png"),
@@ -110,48 +147,15 @@ export default {
         require("../assets/planets/thanatos.png"),
       ],
       quotes: importedQuotes,
-      // quotes: [
-      //   {
-      //     quote: "Your eyes can deceive you; don’t trust them.",
-      //     author: "Obi-Wan Kenobi",
-      //     source: "Star Wars Episode IV: A New Hope",
-      //     authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
-      //   },
-      //   {
-      //     quote: "Try not. Do or do not. There is no try.",
-      //     author: "Yoda",
-      //     source: "Star Wars Episode V: The Empire Strikes Back",
-      //     authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
-      //   },
-      //   {
-      //     quote: "Luminous beings we are, not this crude matter.",
-      //     author: "Yoda",
-      //     source: "The Empire Strikes Back",
-      //     authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
-      //   },
-      //   {
-      //     quote: "Who’s the more foolish: the fool or the fool who follows him?.",
-      //     author: "Obi-Wan Kenobi",
-      //     source: "A New Hope",
-      //     authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
-      //   },
-      //   {
-      //     quote: "Great, kid, don’t get cocky.",
-      //     author: "Han Solo",
-      //     source: "A New Hope",
-      //     authorAvatar: require("../assets/characters/Han-Solo-01-icon.png"),
-      //   },
-      //   {
-      //     quote: "Let go of your hate.",
-      //     author: "Luke Skywalker",
-      //     source: "Return Of The Yedi",
-      //     authorAvatar: require("../assets/characters/Luke-Skywalker-03-icon.png"),
-      //   },
-      // ],
     };
   },
 
   methods: {
+    clearPath() {
+      localStorage.removeItem("visitedPlanets");
+      this.visitedPlanets = [];
+    },
+
     randomQuote() {
       return this.quotes[Math.floor(Math.random() * this.quotes.length)];
     },
@@ -181,8 +185,17 @@ export default {
       return JSON.parse(localStorage.getItem("visitedPlanets")) || [];
     };
 
+    const explorePath = () => {
+      let scrollEl = pathHeaderRowCnt.value;
+      if (scrollEl) {
+        scrollEl.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
     return {
       cuVisitedPlanets,
+      pathHeaderRowCnt,
+      explorePath,
     };
   },
 
@@ -213,7 +226,15 @@ export default {
 #page-top-section .greeting-cnt p {
   color: whitesmoke;
 }
+#page-top-section .greeting-cnt p.sub {
+  font-size: 1rem;
+}
 
+@media all and (min-width: 768px) {
+  #page-top-section .greeting-cnt p.sub {
+    font-size: 1.25rem;
+  }
+}
 /* JEDI'S JOURNEY */
 
 .timeline {
