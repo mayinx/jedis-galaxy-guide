@@ -93,21 +93,11 @@
 </template>
 
 <script>
+import importedQuotes from "../data/quotes";
 export default {
   data() {
     return {
-      visitedPlanets: [
-        // { name: "Tatoine", visitedAt: Date.now(), transportation: "Death Star" },
-        // { name: "Naboo", visitedAt: Date.now(), transportation: "CR90 corvette" },
-        // { name: "Mülleimer", visitedAt: Date.now(), transportation: "Star Destroyer" },
-        // { name: "Abfuhr", visitedAt: Date.now(), transportation: "Sentinel-class landing craft" },
-        // { name: "Tonne", visitedAt: Date.now(), transportation: "Millennium Falcon" },
-        // { name: "Riza", visitedAt: Date.now(), transportation: "Y-wing" },
-        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "X-wing" },
-        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "TIE Advanced x1" },
-        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "Executor" },
-        // { name: "Stray Planet", visitedAt: Date.now(), transportation: "Rebel transport" },
-      ],
+      visitedPlanets: [],
 
       planetIcons: [
         require("../assets/planets/02 mercury.png"),
@@ -119,44 +109,45 @@ export default {
         require("../assets/planets/11 pluto.png"),
         require("../assets/planets/thanatos.png"),
       ],
-      quotes: [
-        {
-          quote: "Your eyes can deceive you; don’t trust them.",
-          author: "Obi-Wan Kenobi",
-          source: "Star Wars Episode IV: A New Hope",
-          authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
-        },
-        {
-          quote: "Try not. Do or do not. There is no try.",
-          author: "Yoda",
-          source: "Star Wars Episode V: The Empire Strikes Back",
-          authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
-        },
-        {
-          quote: "Luminous beings we are, not this crude matter.",
-          author: "Yoda",
-          source: "The Empire Strikes Back",
-          authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
-        },
-        {
-          quote: "Who’s the more foolish: the fool or the fool who follows him?.",
-          author: "Obi-Wan Kenobi",
-          source: "A New Hope",
-          authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
-        },
-        {
-          quote: "Great, kid, don’t get cocky.",
-          author: "Han Solo",
-          source: "A New Hope",
-          authorAvatar: require("../assets/characters/Han-Solo-01-icon.png"),
-        },
-        {
-          quote: "Let go of your hate.",
-          author: "Luke Skywalker",
-          source: "Return Of The Yedi",
-          authorAvatar: require("../assets/characters/Luke-Skywalker-03-icon.png"),
-        },
-      ],
+      quotes: importedQuotes,
+      // quotes: [
+      //   {
+      //     quote: "Your eyes can deceive you; don’t trust them.",
+      //     author: "Obi-Wan Kenobi",
+      //     source: "Star Wars Episode IV: A New Hope",
+      //     authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
+      //   },
+      //   {
+      //     quote: "Try not. Do or do not. There is no try.",
+      //     author: "Yoda",
+      //     source: "Star Wars Episode V: The Empire Strikes Back",
+      //     authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
+      //   },
+      //   {
+      //     quote: "Luminous beings we are, not this crude matter.",
+      //     author: "Yoda",
+      //     source: "The Empire Strikes Back",
+      //     authorAvatar: require("../assets/characters/Yoda-01-icon.png"),
+      //   },
+      //   {
+      //     quote: "Who’s the more foolish: the fool or the fool who follows him?.",
+      //     author: "Obi-Wan Kenobi",
+      //     source: "A New Hope",
+      //     authorAvatar: require("../assets/characters/Old-Obi-Wan-icon.png"),
+      //   },
+      //   {
+      //     quote: "Great, kid, don’t get cocky.",
+      //     author: "Han Solo",
+      //     source: "A New Hope",
+      //     authorAvatar: require("../assets/characters/Han-Solo-01-icon.png"),
+      //   },
+      //   {
+      //     quote: "Let go of your hate.",
+      //     author: "Luke Skywalker",
+      //     source: "Return Of The Yedi",
+      //     authorAvatar: require("../assets/characters/Luke-Skywalker-03-icon.png"),
+      //   },
+      // ],
     };
   },
 
@@ -303,22 +294,6 @@ export default {
 }
 
 .timeline > li > .timeline-badge {
-  /* color: #fff;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 1.5em;
-  text-align: center;
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  margin-left: -25px;
-  z-index: 100;
-  border-top-right-radius: 50%;
-  border-top-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%; */
-
   color: #fff;
   width: 75px;
   height: 75px;
@@ -328,12 +303,22 @@ export default {
   position: absolute;
   top: 2px;
   left: 50%;
+  display: flex;
   margin-left: -38px;
   z-index: 100;
+  background-color: #efecec;
+  border-radius: 50px;
+  /* padding: 1rem; */
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  border: 2px solid #d4d4d4;
 }
 .timeline > li > .timeline-badge img {
-  width: inherit;
-  height: inherit;
+  width: 90%;
+  height: 90%;
 }
 
 .timeline > li.timeline-item-right > .timeline-panel {
