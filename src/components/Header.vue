@@ -30,7 +30,7 @@
         </button>
 
         <div class="collapse navbar-collapse justify-content-between gap-lg-2" id="navbarCollapse">
-          <ul class="fs-5 gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
+          <ul class="gap-2 gap-lg-2 gap-xl-3 navbar-nav p-1 p-lg-0">
             <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#navbarCollapse.show">
               <router-link to="/galaxy" class="nav-link d-flex">
                 <v-icon name="gi-galaxy" class="align-middle" scale="1.5" />
@@ -144,6 +144,7 @@ input#galaxy-search {
 #nav .navbar-nav {
   align-items: stretch;
   margin-bottom: 0.5rem;
+  font-size: 1.25rem;
 }
 #nav .navbar-nav a {
   font-weight: bold;
@@ -169,10 +170,17 @@ input#galaxy-search {
   }
   #nav .navbar-nav {
     margin: 0;
+    font-size: 1rem;
   }
   #nav .navbar-nav a {
     justify-content: center;
     padding: 0.5rem 1rem;
+  }
+}
+@media (min-width: 1100px) {
+  #nav .navbar-nav {
+    margin: 0;
+    font-size: 1.25rem;
   }
 }
 </style>

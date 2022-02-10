@@ -87,7 +87,12 @@
           style="min-height: 15rem"
           class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-5 gy-5"
         >
-          <PlanetListItem v-for="(planet, idx) in planets" :key="idx" :planet="planet" />
+          <PlanetListItem
+            v-for="(planet, idx) in planets"
+            :key="idx"
+            :planet="planet"
+            :parentListApiUrl="currentApiUrl"
+          />
         </div>
       </div>
     </section>
@@ -97,6 +102,7 @@
 <script>
 import { ref } from "vue";
 import { inject } from "vue";
+import { useRoute } from "vue-router";
 import env from "@/env.js";
 import PlanetListItem from "../components/PlanetListItem.vue";
 
@@ -114,6 +120,9 @@ export default {
     const error = ref(null);
     const planetsListCnt = ref(null);
     const listOptionsCnt = ref(null);
+    const currentApiUrl = ref(null);
+
+    const route = useRoute();
 
     const bigBang = () => {
       clearSearch();
@@ -143,19 +152,26 @@ export default {
 
     const clearSearch = () => (search.value = "");
 
-    const loadPlanets = async ({ composeQuery = false, loadMore = false } = {}) => {
+    const loadPlanets = async ({ apiUrl = null, composeQuery = false, loadMore = false } = {}) => {
       isLoading.value = true;
       hasError.value = false;
 
       try {
         // TODO: Brrr - refactor this
-        const apiBaseUrl = loadMore ? nextPageUrl.value : env.apiPlanetsUrl;
-        const apiUrlParams =
-          composeQuery && search.value && search.value != "" ? `?search=${search.value}` : "";
-        const apiUrl = `${apiBaseUrl}${apiUrlParams}`;
+        if (apiUrl) {
+          currentApiUrl.value = apiUrl;
+        } else {
+          const apiBaseUrl = loadMore ? nextPageUrl.value : env.apiPlanetsUrl;
+          const apiUrlParams =
+            composeQuery && search.value && search.value != "" ? `?search=${search.value}` : "";
+          currentApiUrl.value = `${apiBaseUrl}${apiUrlParams}`;
+        }
+
+        console.log("apiUrl: ", apiUrl);
+        console.log("currentApiUrl: ", currentApiUrl.value);
 
         // fetch planets from swapi
-        let jsonResult = await axios.get(`${apiUrl}`);
+        let jsonResult = await axios.get(`${currentApiUrl.value}`);
 
         if (loadMore) {
           const newPlanets = jsonResult?.data?.results;
@@ -197,6 +213,25 @@ export default {
       }
     };
 
+    // FYI: If present in the params, use the galaxyApiUrl (passed back
+    // from the PlanetDetal-View) to reconstitute the previous state of
+    // the Galaxy's list.view (because a simple push.back in the PlanetDetail-view
+    // doesn't restore the previous list state)
+    //
+    // TODO: I'm pretty sure that's not quite the idiomatic way to solve this ;-)
+    //- figure out what's the VueJS-way is here
+    //
+    // EDIT: Invesitigate "Navigation Guards" or "(Vuex) Store"
+    const loadPlanetsFromParamsUrl = async () => {
+      const apiUrl = route.params.galaxyApiUrl;
+      console.log("apiUrl: ", apiUrl);
+      console.log("route.params: ", route.params);
+      if (apiUrl) {
+        await loadPlanets({ apiUrl: apiUrl });
+        scrollListOptionsIntoView();
+      }
+    };
+
     return {
       search,
       planets,
@@ -213,11 +248,14 @@ export default {
       listOptionsCnt,
       scrollListOptionsIntoView,
       handleInfiniteScroll,
+      currentApiUrl,
+      loadPlanetsFromParamsUrl,
     };
   },
 
   mounted() {
     window.addEventListener("scroll", this.handleInfiniteScroll);
+    this.loadPlanetsFromParamsUrl();
   },
   components: { PlanetListItem },
 };
