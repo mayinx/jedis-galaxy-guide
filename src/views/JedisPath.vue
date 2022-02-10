@@ -13,7 +13,6 @@
               <button type="button" class="btn btn-primary btn" @click="explorePath()">
                 Explore Path
               </button>
-
               <button type="button" class="btn btn-primary btn" @click="clearPath()">
                 Clear Path
               </button>

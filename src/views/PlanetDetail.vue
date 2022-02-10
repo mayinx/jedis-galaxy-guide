@@ -12,6 +12,9 @@
               >
               (argh - wrong league again...)
             </p>
+            <p>
+              <button @click="goBack()" class="btn btn-primary btn-sm">&lt; Back</button>
+            </p>
           </div>
         </div>
       </div>
@@ -48,11 +51,13 @@
 <script>
 import { ref, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
+import router from "@/router";
 import env from "@/env.js";
 import { inject } from "vue";
 
 export default {
   name: "PlanetDetails",
+
   data() {
     return {
       images: [
@@ -96,6 +101,7 @@ export default {
     const route = useRoute();
     const isLoading = ref(false);
     const error = ref(null);
+    const galaxyApiUrl = ref(null);
 
     const spaceships = ref([
       "Death Star",
@@ -118,6 +124,7 @@ export default {
     const cuVisitedPlanets = () => {
       return JSON.parse(localStorage.getItem("visitedPlanets")) || [];
     };
+
     // update db
     const setCuVisitedPlanets = ({ name }) => {
       let data = cuVisitedPlanets();
@@ -139,10 +146,17 @@ export default {
       }
     };
 
+    const goBack = () => {
+      router.push({ name: "Galaxy", params: { galaxyApiUrl: galaxyApiUrl.value } });
+    };
+
     onBeforeMount(async () => {
       isLoading.value = true;
       try {
         const planetName = route.params.name;
+        // Current api-url of the previous list view
+        // TODO: There must be somethimng more elegant out there
+        galaxyApiUrl.value = route.params.listApiUrl;
         // FYI: Funny - at a quick glance SWAPI-objects don't seem to carry
         // an explicit 'id'-attribute - just an url that includes that id - so
         // parsing that id out of the url would be an option - or pass the url
@@ -152,6 +166,7 @@ export default {
         planet.value = jsonResult?.data?.results[0];
         isLoading.value = false;
         if (planet.value) setCuVisitedPlanets(planet.value);
+        else router.push({ name: "PageNotFound" });
       } catch (e) {
         error.value = e;
         console.log("error fetching data: ", e);
@@ -162,6 +177,7 @@ export default {
       planet,
       isLoading,
       error,
+      goBack,
     };
   },
 };

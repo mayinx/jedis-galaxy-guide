@@ -4,6 +4,7 @@ import Galaxy from "../views/Galaxy.vue";
 import PlanetDetail from "../views/PlanetDetail.vue";
 import JedisPath from "../views/JedisPath.vue";
 import BucketList from "../views/BucketList.vue";
+import PageNotFound from "../views/PageNotFound.vue";
 
 const routes = [
   {
@@ -13,22 +14,24 @@ const routes = [
   },
   {
     path: "/galaxy",
-    name: "The Galaxy",
+    name: "Galaxy",
     component: Galaxy,
   },
   {
+    // path: "/planet/:name",
     path: "/planet/:name",
-    name: "Planet Details",
+    name: "PlanetDetail",
     component: PlanetDetail,
+    params: ["name", "listApiUrl"],
   },
   {
     path: "/jedis-path",
-    name: "Jedi's Path",
+    name: "JedisPath",
     component: JedisPath,
   },
   {
     path: "/bucket-list",
-    name: "Jedi Bucket List",
+    name: "JedisBucketList",
     component: BucketList,
   },
   {
@@ -38,6 +41,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
+  {
+    path: "/:catchAll(.*)*",
+    name: "PageNotFound",
+    component: PageNotFound,
   },
 ];
 

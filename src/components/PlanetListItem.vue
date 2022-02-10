@@ -14,7 +14,19 @@
           }}
         </p>
         <p class="card-text">
-          <router-link :to="`/planet/` + planet.name">
+          <!-- <router-link :to="`/planet/` + planet.name"> -->
+          <!-- <router-link
+            :to="{
+              path: `/planet/` + planet.name,
+              params: { name: planet.name, listApiUrl: parentListApiUrl },
+            }"
+          > -->
+          <router-link
+            :to="{
+              name: 'PlanetDetail',
+              params: { name: planet.name, listApiUrl: parentListApiUrl },
+            }"
+          >
             <button type="button" class="btn btn-outline-secondary">
               Visit {{ planet.name }}!
             </button>
@@ -26,7 +38,9 @@
 </template>
 
 <script>
-export default { props: ["planet"] };
+export default {
+  props: ["planet", "parentListApiUrl"],
+};
 </script>
 
 <style scoped>
